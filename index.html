@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OnePage</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <div id="main-page">
+    <div id="title">
+      <span id="title-label">OnePage</span>
+    </div>
+    <div id="textarea-container">
+      <textarea id="textarea" class="text" placeholder="Text or URL"></textarea>
+    </div>
+    <div id="insert-button-container">
+      <button id="insert-button" class="button unselectable"><i class="fa fa-caret-down fa-lg"></i></button>
+    </div>
+    <div id="canvas-container" class="unselectable">
+      <div id="canvas-handle-container">
+        <div id="canvas-handle" class="hide">
+          <div id="canvas-handle-hitarea"></div>
+          <div id="canvas-handle-controller">
+            <i id="canvas-handle-delete-button" class="fa fa-times-circle fa-lg"></i><!--
+         --><button id="canvas-handle-up-button" class="button button-left canvas-handle-button unselectable">
+              <i class="fa fa-chevron-up"></i>
+            </button><!--
+         --><button id="canvas-handle-down-button" class="button button-right canvas-handle-button unselectable">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <i id="canvas-handle-size-handle" class="fa fa-circle fa-lg"></i>
+        </div>
+      </div>
+      <div id="canvas"></div>
+    </div>
+    <div id="form-container">
+      <input id="publish-title-text" class="text" type="text" placeholder="Title" />
+      <button id="publish-button" class="button unselectable">Publish</button>
+    </div>
+  </div>
+  <div id="publish-page" class="hide">
+    <div id="publish-page-dialog">
+      <div id="publish-page-content">
+        <i id="publish-loading-spinner" class="fa fa-spinner fa-spin fa-2x hide"></i>
+        <a id="publish-link" href="#" target="_blank" class="hide"></a>
+      </div>
+      <button id="publish-close-button" class="button unselectable">Close</button>
+    </div>
+  </div>
+  <!--[if (gte IE 9)|!(IE)]><!-->
+  <script src="//cdn.rawgit.com/dankogai/js-base64/master/base64.min.js"></script>
+  <script src="//cdn.rawgit.com/ionstage/circuit/master/circuit.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    onepage.app.initialize();
+  </script>
+  <!--<![endif]-->
+  <!--[if lt IE 9]>
+  <script>
+    alert('Sorry, your browser doesn\'t support this application.');
+  </script>
+  <![endif]-->
+</body>
+</html>
