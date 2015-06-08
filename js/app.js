@@ -1,5 +1,7 @@
 (function(window) {
-  var circuit = window.circuit;
+  var circuit = require('circuit');
+  var Base64 = require('js-base64').Base64;
+
   var document = window.document;
   var documentFileName;
   var CLIENTJS_SCRIPT_URL = 'https://apis.google.com/js/client.js?onload=handleClientLoad';
