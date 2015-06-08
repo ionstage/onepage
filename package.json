@@ -2,6 +2,7 @@
   "name": "onepage",
   "version": "0.1.0",
   "scripts": {
+    "build": "uglifyjs js/bundle.js -o build/bundle.min.js --comments '/^\\!|^@preserve|^@cc_on|\\bMIT\\b|\\bMPL\\b|\\bGPL\\b|\\(c\\)|License|Copyright/' -c -m; uglifyjs js/app.js -o build/app.min.js -c -m; cat css/app.css | cleancss -o build/app.min.css; cat css/viewer.css | cleancss -o build/viewer.min.css",
     "bundle": "browserify -r circuit -r js-base64 -i buffer -o js/bundle.js",
     "start": "browser-sync start --files='index.html, css/*.css, js/*.js' --server"
   },
@@ -12,7 +13,9 @@
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "browserify": "^10.2.4",
-    "font-awesome-svg-png": "^1.1.5"
+    "clean-css": "^3.3.1",
+    "font-awesome-svg-png": "^1.1.5",
+    "uglify-js": "^2.4.23"
   },
   "private": true
 }
