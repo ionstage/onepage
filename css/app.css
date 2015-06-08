@@ -19,6 +19,39 @@ body {
   display: none;
 }
 
+.spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -ms-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+  0% { -moz-transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); }
+}
+
+@-ms-keyframes spin {
+  0% { -ms-transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); }
+}
+
+@-o-keyframes spin {
+  0% { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .text {
   -moz-box-sizing: border-box;
   background-color: #fff;
@@ -87,6 +120,38 @@ body {
 
 .button-right {
   border-radius: 0px 5px 5px 0px;
+}
+
+.icon.caret-down {
+  height: 24px;
+  vertical-align: middle;
+  width: 24px;
+}
+
+.icon.times-circle {
+  border: 1px solid white;
+  height: 24px;
+  vertical-align: middle;
+  width: 24px;
+}
+
+.icon.chevron {
+  height: 16px;
+  vertical-align: top;
+  width: 16px;
+}
+
+.icon.circle {
+  border: 1px solid white;
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+
+.icon.spinner {
+  height: 32px;
+  vertical-align: middle;
+  width: 32px;
 }
 
 #main-page {
@@ -169,10 +234,9 @@ body {
 
 #canvas-handle-delete-button {
   background-color: white;
-  color: gray;
+  border-radius: 12px;
   cursor: pointer;
   margin-right: 12px;
-  text-shadow: -2px -2px #fff, 2px -2px #fff, -2px 2px #fff, 2px 2px #fff;
 }
 
 #canvas-handle-delete-button:active {
@@ -195,9 +259,11 @@ body {
 }
 
 #canvas-handle-size-handle {
-  color: gray;
+  background-color: white;
+  border-radius: 11px;
+  margin-left: -4px;
+  margin-top: -4px;
   position: absolute;
-  text-shadow: -2px -2px #fff, 2px -2px #fff, -2px 2px #fff, 2px 2px #fff;
 }
 
 #canvas-handle-size-handle.active {
