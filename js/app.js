@@ -785,7 +785,6 @@
               },
               drag: function(dx, dy) {
                 var target = self.element._currentTarget;
-                var size = dom.getSize(target);
                 var position = dom.adjustTargetPosition(startOffset.left + dx,
                                                         startOffset.top + dy,
                                                         targetSize.width,
