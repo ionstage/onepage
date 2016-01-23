@@ -7,6 +7,10 @@
     return (typeof document === 'undefined');
   };
 
+  dom.child = function(el, index) {
+    return el.children[index];
+  };
+
   dom.animate = function(callback) {
     return window.requestAnimationFrame(callback);
   };
