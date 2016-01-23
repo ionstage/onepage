@@ -10,7 +10,7 @@
     this.element = this.prop(props.element);
   }, Component);
 
-  InsertForm.prototype.inputElement = function() {
+  InsertForm.prototype.textElement = function() {
     return dom.child(this.element(), 0);
   };
 
