@@ -18,6 +18,10 @@
     el.value = s;
   };
 
+  dom.disabled = function(el, disabled) {
+    el.disabled = disabled;
+  };
+
   dom.animate = function(callback) {
     return window.requestAnimationFrame(callback);
   };
