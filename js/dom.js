@@ -22,6 +22,10 @@
     el.disabled = disabled;
   };
 
+  dom.on = function(el, type, listener) {
+    el.addEventListener(type, listener);
+  };
+
   dom.animate = function(callback) {
     return window.requestAnimationFrame(callback);
   };
