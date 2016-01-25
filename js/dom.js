@@ -11,6 +11,13 @@
     return el.children[index];
   };
 
+  dom.value = function(el, s) {
+    if (typeof s === 'undefined')
+      return el.value;
+
+    el.value = s;
+  };
+
   dom.animate = function(callback) {
     return window.requestAnimationFrame(callback);
   };
