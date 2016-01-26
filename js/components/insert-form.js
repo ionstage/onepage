@@ -8,8 +8,10 @@
   var InsertForm = helper.inherits(function(props) {
     InsertForm.super_.call(this);
     this.element = this.prop(props.element);
+    this.inserter = props.inserter;
 
     dom.on(this.textElement(), 'input', InsertForm.prototype.oninput.bind(this));
+    dom.on(this.buttonElement(), 'click', InsertForm.prototype.onclick.bind(this));
 
     // redraw for the initial value of the text element
     this.markDirty();
@@ -30,6 +32,15 @@
 
   InsertForm.prototype.oninput = function() {
     this.markDirty();
+  };
+
+  InsertForm.prototype.onclick = function() {
+    var text = dom.value(this.textElement());
+
+    this.inserter(text).then(function() {
+      dom.value(this.textElement(), '');
+      this.markDirty();
+    }.bind(this));
   };
 
   if (typeof module !== 'undefined' && module.exports)
