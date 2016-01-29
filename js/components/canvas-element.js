@@ -43,7 +43,7 @@
       srcText.split(/\r\n|\r|\n/g).forEach(function(text) {
         text = helper.escape(text).replace(/\s/g, '&nbsp;');
         var textElement = dom.el('<div>');
-        dom.html(textElement, text);
+        dom.html(textElement, text || '&nbsp;');
         dom.append(element, textElement);
       });
 
