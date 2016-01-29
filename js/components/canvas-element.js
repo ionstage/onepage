@@ -40,8 +40,14 @@
     return Promise.resolve().then(function() {
       var element = dom.el('<div>');
 
+      srcText.split(/\r\n|\r|\n/g).forEach(function(text) {
+        text = helper.escape(text).replace(/\s/g, '&nbsp;');
+        var textElement = dom.el('<div>');
+        dom.html(textElement, text);
+        dom.append(element, textElement);
+      });
+
       dom.addClass(element, 'canvas-element');
-      dom.text(element, srcText);
       dom.visible(element, false);
       dom.append(parentElement, element);
 

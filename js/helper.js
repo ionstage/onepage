@@ -21,6 +21,23 @@
     return value;
   };
 
+  helper.escape = function(s) {
+    return s.replace(/[&<>"']/g, function(s) {
+      switch (s) {
+      case '&':
+        return '&amp;';
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '"':
+        return '&quot;';
+      case '\'':
+        return '&#039;';
+      }
+    });
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = helper;
   else

@@ -36,8 +36,8 @@
     el.classList.add(className);
   };
 
-  dom.text = function(el, s) {
-    el.textContent = s;
+  dom.html = function(el, s) {
+    el.innerHTML = s;
   };
 
   dom.value = function(el, s) {
