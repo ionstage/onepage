@@ -16,18 +16,14 @@
   var CanvasTextElement = helper.inherits(function(props) {
     CanvasTextElement.super_.call(this);
 
-    this.cx = this.prop(props.cx);
-    this.cy = this.prop(props.cy);
-    this.width = this.prop(props.width);
-    this.height = this.prop(props.height);
+    this.x = this.prop(props.x);
+    this.y = this.prop(props.y);
     this.element = this.prop(props.element);
   }, CanvasElement);
 
   CanvasTextElement.prototype.redraw = function() {
     var element = this.element();
-    var x = this.cx() - this.width() / 2;
-    var y = this.cy() - this.height() / 2;
-    var translate = 'translate(' + x + 'px, ' + y + 'px)';
+    var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
 
     dom.css(element, {
       msTransform: translate,
@@ -38,8 +34,7 @@
 
   CanvasTextElement.load = function(props) {
     var srcText = props.srcText;
-    var cx = props.cx;
-    var cy = props.cy;
+    var locator = props.locator;
     var parentElement = props.parentElement;
 
     return Promise.resolve().then(function() {
@@ -52,11 +47,14 @@
 
       var rect = dom.rect(element);
 
-      var instance = new CanvasTextElement({
-        cx: cx,
-        cy: cy,
+      var point = locator({
         width: rect.width,
-        height: rect.height,
+        height: rect.height
+      });
+
+      var instance = new CanvasTextElement({
+        x: point.x,
+        y: point.y,
         element: element
       });
 

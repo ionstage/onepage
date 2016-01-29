@@ -21,11 +21,10 @@
     return dom.child(this.element(), 1);
   };
 
-  Canvas.prototype.loadElement = function(srcText, cx, cy) {
+  Canvas.prototype.loadElement = function(srcText, locator) {
     return CanvasElement.load({
       srcText: srcText,
-      cx: cx,
-      cy: cy,
+      locator: locator,
       parentElement: this.containerElement()
     }).then(function(canvasElement) {
       this.canvasElements().push(canvasElement);
