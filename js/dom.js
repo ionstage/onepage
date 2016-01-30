@@ -20,6 +20,10 @@
     parent.appendChild(el);
   };
 
+  dom.remove = function(el) {
+    el.parentNode.removeChild(el);
+  };
+
   dom.child = function(el, index) {
     return el.children[index];
   };
@@ -47,6 +51,10 @@
     el.value = s;
   };
 
+  dom.src = function(el, s) {
+    el.src = s;
+  };
+
   dom.disabled = function(el, disabled) {
     el.disabled = disabled;
   };
@@ -65,6 +73,16 @@
 
   dom.animate = function(callback) {
     return window.requestAnimationFrame(callback);
+  };
+
+  dom.isURL = function(s) {
+    try {
+      new URL(s);
+    } catch (e) {
+      return false;
+    }
+
+    return true;
   };
 
   if (typeof module !== 'undefined' && module.exports)
