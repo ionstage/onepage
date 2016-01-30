@@ -5,26 +5,15 @@
   var dom = app.dom || require('../dom.js');
   var Component = app.Component || require('./component.js');
 
-  var CanvasElement = helper.inherits(function() {
+  var CanvasElement = helper.inherits(function(props) {
     CanvasElement.super_.call(this);
-  }, Component);
-
-  CanvasElement.load = function(props) {
-    if (dom.isURL(props.srcText))
-      return CanvasImageElement.load(props);
-    else
-      return CanvasTextElement.load(props);
-  };
-
-  var CanvasTextElement = helper.inherits(function(props) {
-    CanvasTextElement.super_.call(this);
 
     this.x = this.prop(props.x);
     this.y = this.prop(props.y);
     this.element = this.prop(props.element);
-  }, CanvasElement);
+  }, Component);
 
-  CanvasTextElement.prototype.redraw = function() {
+  CanvasElement.prototype.redraw = function() {
     var element = this.element();
     var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
 
@@ -34,6 +23,17 @@
       webkitTransform: translate
     });
   };
+
+  CanvasElement.load = function(props) {
+    if (dom.isURL(props.srcText))
+      return CanvasImageElement.load(props);
+    else
+      return CanvasTextElement.load(props);
+  };
+
+  var CanvasTextElement = helper.inherits(function(props) {
+    CanvasTextElement.super_.call(this, props);
+  }, CanvasElement);
 
   CanvasTextElement.load = function(props) {
     var srcText = props.srcText;
@@ -75,64 +75,47 @@
   };
 
   var CanvasImageElement = helper.inherits(function(props) {
-    CanvasImageElement.super_.call(this);
-
-    this.x = this.prop(props.x);
-    this.y = this.prop(props.y);
-    this.element = this.prop(props.element);
+    CanvasImageElement.super_.call(this, props);
   }, CanvasElement);
-
-  CanvasImageElement.prototype.redraw = function() {
-    var element = this.element();
-    var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
-
-    dom.css(element, {
-      msTransform: translate,
-      transform: translate,
-      webkitTransform: translate
-    });
-  };
 
   CanvasImageElement.load = function(props) {
     var srcText = props.srcText;
     var locator = props.locator;
     var parentElement = props.parentElement;
 
-    return Promise.resolve().then(function() {
+    return new Promise(function(resolve, reject) {
       var element = dom.el('<img>');
 
       dom.addClass(element, 'canvas-element');
       dom.src(element, srcText);
       dom.visible(element, false);
 
-      return new Promise(function(resolve, reject) {
-        dom.on(element, 'load', function() {
-          var rect = dom.rect(element);
+      dom.on(element, 'load', function() {
+        var rect = dom.rect(element);
 
-          var point = locator({
-            width: rect.width,
-            height: rect.height
-          });
-
-          var instance = new CanvasImageElement({
-            x: point.x,
-            y: point.y,
-            element: element
-          });
-
-          instance.redraw();
-          dom.visible(element, true);
-
-          resolve(instance);
+        var point = locator({
+          width: rect.width,
+          height: rect.height
         });
 
-        dom.on(element, 'error', function(event) {
-          dom.remove(element);
-          reject(event);
+        var instance = new CanvasImageElement({
+          x: point.x,
+          y: point.y,
+          element: element
         });
 
-        dom.append(parentElement, element);
+        instance.redraw();
+        dom.visible(element, true);
+
+        resolve(instance);
       });
+
+      dom.on(element, 'error', function(event) {
+        dom.remove(element);
+        reject(event);
+      });
+
+      dom.append(parentElement, element);
     });
   };
 
