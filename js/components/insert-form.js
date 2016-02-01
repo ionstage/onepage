@@ -45,8 +45,7 @@
       var textElement = this.textElement();
       dom.value(textElement, '');
       dom.disabled(textElement, false);
-      dom.disabled(this.buttonElement(), false);
-      this.markDirty();
+      // button-element remain disabled
     }.bind(this)).catch(function() {
       dom.disabled(this.textElement(), false);
       dom.disabled(this.buttonElement(), false);
