@@ -35,11 +35,21 @@
   };
 
   InsertForm.prototype.onclick = function() {
-    var text = dom.value(this.textElement());
+    var textElement = this.textElement();
+    var text = dom.value(textElement);
+
+    dom.disabled(textElement, true);
+    dom.disabled(this.buttonElement(), true);
 
     this.inserter(text).then(function() {
-      dom.value(this.textElement(), '');
+      var textElement = this.textElement();
+      dom.value(textElement, '');
+      dom.disabled(textElement, false);
+      dom.disabled(this.buttonElement(), false);
       this.markDirty();
+    }.bind(this)).catch(function() {
+      dom.disabled(this.textElement(), false);
+      dom.disabled(this.buttonElement(), false);
     }.bind(this));
   };
 
