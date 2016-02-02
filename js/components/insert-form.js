@@ -7,6 +7,7 @@
 
   var InsertForm = helper.inherits(function(props) {
     InsertForm.super_.call(this);
+    this.disabled = this.prop(false);
     this.element = this.prop(props.element);
     this.inserter = props.inserter;
 
@@ -26,29 +27,28 @@
   };
 
   InsertForm.prototype.redraw = function() {
-    var text = dom.value(this.textElement());
-    dom.disabled(this.buttonElement(), !text);
+    var disabled = this.disabled();
+    var textElement = this.textElement();
+    var text = dom.value(textElement);
+
+    dom.disabled(textElement, disabled);
+    dom.disabled(this.buttonElement(), disabled || !text);
   };
 
-  InsertForm.prototype.oninput = function() {
+  InsertForm.prototype.oninput = function(event) {
     this.markDirty();
   };
 
   InsertForm.prototype.onclick = function() {
-    var textElement = this.textElement();
-    var text = dom.value(textElement);
+    var text = dom.value(this.textElement());
 
-    dom.disabled(textElement, true);
-    dom.disabled(this.buttonElement(), true);
+    this.disabled(true);
 
     this.inserter(text).then(function() {
-      var textElement = this.textElement();
-      dom.value(textElement, '');
-      dom.disabled(textElement, false);
-      // button-element remain disabled
+      dom.value(this.textElement(), '');
+      this.disabled(false);
     }.bind(this)).catch(function() {
-      dom.disabled(this.textElement(), false);
-      dom.disabled(this.buttonElement(), false);
+      this.disabled(false);
     }.bind(this));
   };
 
