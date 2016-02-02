@@ -67,8 +67,20 @@
     return el.getBoundingClientRect();
   };
 
+  dom.scrollLeft = function(el) {
+    return el.scrollLeft;
+  };
+
+  dom.scrollTop = function(el) {
+    return el.scrollTop;
+  };
+
   dom.on = function(el, type, listener) {
     el.addEventListener(type, listener);
+  };
+
+  dom.off = function(el, type, listener) {
+    el.removeEventListener(type, listener);
   };
 
   dom.animate = function(callback) {
@@ -84,6 +96,107 @@
 
     return true;
   };
+
+  dom.supportsTouch = function() {
+    return 'createTouch' in document;
+  };
+
+  dom.pagePoint = function(event, offset) {
+    if (dom.supportsTouch())
+      event = event.changedTouches[0];
+
+    return {
+      x: event.pageX - (offset ? offset.x : 0),
+      y: event.pageY - (offset ? offset.y : 0)
+    };
+  };
+
+  dom.clientPoint = function(event, offset) {
+    if (dom.supportsTouch())
+      event = event.changedTouches[0];
+
+    return {
+      x: event.clientX - (offset ? offset.x : 0),
+      y: event.clientY - (offset ? offset.y : 0)
+    };
+  };
+
+  dom.draggable = (function() {
+    if (dom.unsupported())
+      return function() {};
+
+    var supportsTouch = dom.supportsTouch();
+    var EVENT_TYPE_START = supportsTouch ? 'touchstart' : 'mousedown';
+    var EVENT_TYPE_MOVE = supportsTouch ? 'touchmove' : 'mousemove';
+    var EVENT_TYPE_END = supportsTouch ? 'touchend' : 'mouseup';
+
+    var Draggable = function(props) {
+      this.el = props.el;
+      this.onstart = props.onstart;
+      this.onmove = props.onmove;
+      this.onend = props.onend;
+      this.start = start.bind(this);
+      this.move = move.bind(this);
+      this.end = end.bind(this);
+      this.lock = false;
+      this.startingPoint = null;
+
+      dom.on(this.el, EVENT_TYPE_START, this.start);
+    };
+
+    var start = function(event) {
+      if (this.lock)
+        return;
+
+      this.lock = true;
+      this.startingPoint = dom.pagePoint(event);
+
+      var el = this.el;
+      var onstart = this.onstart;
+
+      var rect = dom.rect(el);
+      var p = dom.clientPoint(event, {
+        x: rect.left - dom.scrollLeft(el),
+        y: rect.top - dom.scrollTop(el)
+      });
+
+      if (typeof onstart === 'function')
+        onstart(p.x, p.y, event);
+
+      dom.on(document, EVENT_TYPE_MOVE, this.move);
+      dom.on(document, EVENT_TYPE_END, this.end);
+    };
+
+    var move = function(event) {
+      var onmove = this.onmove;
+      var d = dom.pagePoint(event, this.startingPoint);
+
+      if (typeof onmove === 'function')
+        onmove(d.x, d.y, event);
+    };
+
+    var end = function(event) {
+      dom.off(document, EVENT_TYPE_MOVE, this.move);
+      dom.off(document, EVENT_TYPE_END, this.end);
+
+      var onend = this.onend;
+      var d = dom.pagePoint(event, this.startingPoint);
+
+      if (typeof onend === 'function')
+        onend(d.x, d.y, event);
+
+      this.lock = false;
+    };
+
+    return function(el, onstart, onmove, onend) {
+      new Draggable({
+        el: el,
+        onstart: onstart,
+        onmove: onmove,
+        onend: onend
+      });
+    };
+  })();
 
   if (typeof module !== 'undefined' && module.exports)
     module.exports = dom;
