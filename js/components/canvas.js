@@ -6,10 +6,14 @@
   var Component = app.Component || require('./component.js');
   var CanvasElement = app.CanvasElement || require('./canvas-element.js');
 
+  var CanvasElementList = helper.inherits(function() {
+    CanvasElementList.super_.call(this);
+  }, helper.List);
+
   var Canvas = helper.inherits(function(props) {
     Canvas.super_.call(this);
 
-    this.canvasElements = this.prop([]);
+    this.canvasElementList = this.prop(new CanvasElementList());
     this.element = this.prop(props.element);
   }, Component);
 
@@ -27,7 +31,7 @@
       locator: locator,
       parentElement: this.containerElement()
     }).then(function(canvasElement) {
-      this.canvasElements().push(canvasElement);
+      this.canvasElementList().add(canvasElement);
       return canvasElement;
     }.bind(this));
   };
