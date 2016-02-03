@@ -10,6 +10,8 @@
 
     this.x = this.prop(props.x);
     this.y = this.prop(props.y);
+    this.width = this.prop(props.width);
+    this.height = this.prop(props.height);
     this.element = this.prop(props.element);
   }, Component);
 
@@ -55,15 +57,19 @@
       dom.append(parentElement, element);
 
       var rect = dom.rect(element);
+      var width = rect.width;
+      var height = rect.height;
 
       var point = locator({
-        width: rect.width,
-        height: rect.height
+        width: width,
+        height: height
       });
 
       var instance = new CanvasTextElement({
         x: point.x,
         y: point.y,
+        width: width,
+        height: height,
         element: element
       });
 
@@ -92,15 +98,19 @@
 
       dom.on(element, 'load', function() {
         var rect = dom.rect(element);
+        var width = rect.width;
+        var height = rect.height;
 
         var point = locator({
-          width: rect.width,
-          height: rect.height
+          width: width,
+          height: height
         });
 
         var instance = new CanvasImageElement({
           x: point.x,
           y: point.y,
+          width: width,
+          height: height,
           element: element
         });
 
