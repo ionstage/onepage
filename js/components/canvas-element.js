@@ -15,6 +15,17 @@
     this.element = this.prop(props.element);
   }, Component);
 
+  CanvasElement.prototype.contains = function(x, y, tolerance) {
+    var ex = this.x();
+    var ey = this.y();
+    var ewidth = this.width();
+    var eheight = this.height();
+
+    return (ex - tolerance <= x && x <= ex + ewidth + tolerance &&
+            ey - tolerance <= y && y <= ey + eheight + tolerance);
+
+  };
+
   CanvasElement.prototype.redraw = function() {
     var element = this.element();
     var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
