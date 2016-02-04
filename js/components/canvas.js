@@ -10,6 +10,23 @@
     CanvasElementList.super_.call(this);
   }, helper.List);
 
+  CanvasElementList.prototype.fromPoint = function(x, y) {
+    var data = this.data;
+    var closeCanvasElement = null;
+
+    for (var i = data.length - 1; i >= 0; i--) {
+      var canvasElement = data[i];
+
+      if (canvasElement.contains(x, y, 0))
+        return canvasElement;
+
+      if (!closeCanvasElement && canvasElement.contains(x, y, 8))
+        closeCanvasElement = canvasElement;
+    }
+
+    return closeCanvasElement;
+  };
+
   var Canvas = helper.inherits(function(props) {
     Canvas.super_.call(this);
 
