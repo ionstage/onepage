@@ -45,7 +45,19 @@
 
   var CanvasTextElement = helper.inherits(function(props) {
     CanvasTextElement.super_.call(this, props);
+
+    this.widthPerFontSize = this.prop(props.widthPerFontSize);
+    this.heightPerFontSize = this.prop(props.heightPerFontSize);
   }, CanvasElement);
+
+  CanvasTextElement.prototype.redraw = function() {
+    CanvasTextElement.super_.prototype.redraw.call(this);
+
+    var fontSize = Math.min(this.width() / this.widthPerFontSize(),
+                            this.height() / this.heightPerFontSize());
+
+    dom.css(this.element(), { fontSize: fontSize + 'px' });
+  };
 
   CanvasTextElement.load = function(props) {
     var srcText = props.srcText;
@@ -84,6 +96,8 @@
         y: point.y,
         width: width,
         height: height,
+        widthPerFontSize: width / fontSize,
+        heightPerFontSize: height / fontSize,
         element: element
       });
 
