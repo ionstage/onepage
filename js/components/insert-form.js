@@ -7,6 +7,7 @@
 
   var InsertForm = helper.inherits(function(props) {
     InsertForm.super_.call(this);
+
     this.disabled = this.prop(false);
     this.element = this.prop(props.element);
     this.inserter = props.inserter;

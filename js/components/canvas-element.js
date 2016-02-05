@@ -23,7 +23,6 @@
 
     return (ex - tolerance <= x && x <= ex + ewidth + tolerance &&
             ey - tolerance <= y && y <= ey + eheight + tolerance);
-
   };
 
   CanvasElement.prototype.redraw = function() {
