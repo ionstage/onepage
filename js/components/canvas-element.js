@@ -110,7 +110,22 @@
 
   var CanvasImageElement = helper.inherits(function(props) {
     CanvasImageElement.super_.call(this, props);
+
+    this.aspectRatio = this.prop(props.aspectRatio);
   }, CanvasElement);
+
+  CanvasImageElement.prototype.redraw = function() {
+    CanvasImageElement.super_.prototype.redraw.call(this);
+
+    var width = this.width();
+    var height = this.height();
+    var aspectRatio = this.aspectRatio();
+
+    dom.css(this.element(), {
+      width: Math.min(width, aspectRatio * height) + 'px',
+      height: Math.min(height, width / aspectRatio) + 'px'
+    });
+  };
 
   CanvasImageElement.load = function(props) {
     var srcText = props.srcText;
@@ -139,6 +154,7 @@
           y: point.y,
           width: width,
           height: height,
+          aspectRatio: width / height,
           element: element
         });
 
