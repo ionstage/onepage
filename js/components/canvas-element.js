@@ -63,6 +63,10 @@
       });
 
       dom.addClass(element, 'canvas-element');
+
+      var fontSize = 20;
+
+      dom.css(element, { fontSize: fontSize + 'px' });
       dom.visible(element, false);
       dom.append(parentElement, element);
 
