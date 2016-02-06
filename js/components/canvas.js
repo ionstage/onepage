@@ -32,6 +32,12 @@
 
     this.canvasElementList = this.prop(new CanvasElementList());
     this.element = this.prop(props.element);
+    this.dragContext = this.prop({});
+
+    var onstart = Canvas.prototype.onstart.bind(this);
+    var onmove = Canvas.prototype.onmove.bind(this);
+
+    dom.draggable(this.element(), onstart, onmove);
   }, Component);
 
   Canvas.prototype.containerElement = function() {
@@ -51,6 +57,32 @@
       this.canvasElementList().add(canvasElement);
       return canvasElement;
     }.bind(this));
+  };
+
+  Canvas.prototype.onstart = function(x, y, event) {
+    dom.cancel(event);
+
+    var context = this.dragContext();
+    var canvasElement = this.canvasElementList().fromPoint(x, y);
+
+    context.canvasElement = canvasElement;
+
+    if (!canvasElement)
+      return;
+
+    context.x = canvasElement.x();
+    context.y = canvasElement.y();
+  };
+
+  Canvas.prototype.onmove = function(dx, dy) {
+    var context = this.dragContext();
+    var canvasElement = context.canvasElement;
+
+    if (!canvasElement)
+      return;
+
+    canvasElement.x(context.x + dx);
+    canvasElement.y(context.y + dy);
   };
 
   if (typeof module !== 'undefined' && module.exports)

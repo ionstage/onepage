@@ -121,6 +121,10 @@
     };
   };
 
+  dom.cancel = function(event) {
+    event.preventDefault();
+  };
+
   dom.draggable = (function() {
     if (dom.unsupported())
       return function() {};
