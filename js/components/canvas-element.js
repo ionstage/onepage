@@ -53,8 +53,14 @@
   CanvasTextElement.prototype.redraw = function() {
     CanvasTextElement.super_.prototype.redraw.call(this);
 
-    var fontSize = Math.min(this.width() / this.widthPerFontSize(),
-                            this.height() / this.heightPerFontSize());
+    var widthPerFontSize = this.widthPerFontSize();
+    var heightPerFontSize = this.heightPerFontSize();
+
+    var fontSize = Math.min(this.width() / widthPerFontSize,
+                            this.height() / heightPerFontSize);
+
+    this.width(fontSize * widthPerFontSize);
+    this.height(fontSize * heightPerFontSize);
 
     dom.css(this.element(), { fontSize: fontSize + 'px' });
   };
@@ -121,9 +127,15 @@
     var height = this.height();
     var aspectRatio = this.aspectRatio();
 
+    width = Math.min(width, aspectRatio * height);
+    height = Math.min(height, width / aspectRatio);
+
+    this.width(width);
+    this.height(height);
+
     dom.css(this.element(), {
-      width: Math.min(width, aspectRatio * height) + 'px',
-      height: Math.min(height, width / aspectRatio) + 'px'
+      width: width + 'px',
+      height: height + 'px'
     });
   };
 
