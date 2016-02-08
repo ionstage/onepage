@@ -48,6 +48,12 @@
     return dom.child(this.element(), 1);
   };
 
+  Canvas.prototype.updateZIndex = function() {
+    this.canvasElementList().toArray().forEach(function(canvasElement, index) {
+      canvasElement.zIndex(index);
+    });
+  };
+
   Canvas.prototype.loadElement = function(srcText, locator) {
     return CanvasElement.load({
       srcText: srcText,
@@ -55,6 +61,7 @@
       parentElement: this.containerElement()
     }).then(function(canvasElement) {
       this.canvasElementList().add(canvasElement);
+      this.updateZIndex();
       return canvasElement;
     }.bind(this));
   };
