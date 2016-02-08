@@ -13,6 +13,7 @@
     this.width = this.prop(props.width);
     this.height = this.prop(props.height);
     this.element = this.prop(props.element);
+    this.zIndex = this.prop('auto');
   }, Component);
 
   CanvasElement.prototype.contains = function(x, y, tolerance) {
@@ -32,7 +33,8 @@
     dom.css(element, {
       msTransform: translate,
       transform: translate,
-      webkitTransform: translate
+      webkitTransform: translate,
+      zIndex: this.zIndex()
     });
   };
 
