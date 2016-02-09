@@ -51,6 +51,10 @@
     dom.draggable(this.element(), onstart, onmove);
   }, Component);
 
+  Canvas.prototype.borderWidth = function() {
+    return 5;
+  };
+
   Canvas.prototype.containerElement = function() {
     return dom.child(this.element(), 0);
   };
@@ -79,6 +83,11 @@
 
   Canvas.prototype.onstart = function(x, y, event) {
     dom.cancel(event);
+
+    var borderWidth = this.borderWidth();
+
+    x -= borderWidth;
+    y -= borderWidth;
 
     var context = this.dragContext();
     var canvasElement = this.canvasElementList().fromPoint(x, y);
