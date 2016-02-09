@@ -27,6 +27,17 @@
     return closeCanvasElement;
   };
 
+  CanvasElementList.prototype.toFront = function(canvasElement) {
+    var data = this.data;
+    var index = data.indexOf(canvasElement);
+
+    if (index === -1)
+      return;
+
+    data.splice(index, 1);
+    data.push(canvasElement);
+  };
+
   var Canvas = helper.inherits(function(props) {
     Canvas.super_.call(this);
 
