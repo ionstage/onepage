@@ -5,6 +5,7 @@
   var dom = app.dom || require('../dom.js');
   var Component = app.Component || require('./component.js');
   var CanvasElement = app.CanvasElement || require('./canvas-element.js');
+  var CanvasElementHandle = app.CanvasElementHandle || require('./canvas-element-handle.js');
 
   var CanvasElementList = helper.inherits(function() {
     CanvasElementList.super_.call(this);
@@ -43,6 +44,11 @@
 
     this.canvasElementList = this.prop(new CanvasElementList());
     this.element = this.prop(props.element);
+
+    this.canvasElementHandle = this.prop(new CanvasElementHandle({
+      element: this.handleElement()
+    }));
+
     this.dragContext = this.prop({});
 
     var onstart = Canvas.prototype.onstart.bind(this);
