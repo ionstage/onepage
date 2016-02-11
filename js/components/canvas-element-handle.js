@@ -15,6 +15,22 @@
     this.element = this.prop(props.element);
   }, Component);
 
+  CanvasElementHandle.prototype.deleteButtonElement = function() {
+    return dom.child(this.element(), 0);
+  };
+
+  CanvasElementHandle.prototype.stepForwardButtonElement = function() {
+    return dom.child(this.element(), 1);
+  };
+
+  CanvasElementHandle.prototype.stepBackwardButtonElement = function() {
+    return dom.child(this.element(), 2);
+  };
+
+  CanvasElementHandle.prototype.resizeHandleElement = function() {
+    return dom.child(this.element(), 3);
+  };
+
   CanvasElementHandle.prototype.redraw = function() {
     var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
 
