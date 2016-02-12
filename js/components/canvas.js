@@ -4,6 +4,7 @@
   var helper = app.helper || require('../helper.js');
   var dom = app.dom || require('../dom.js');
   var Component = app.Component || require('./component.js');
+  var Relation = app.Relation || require('./relation.js');
   var CanvasElement = app.CanvasElement || require('./canvas-element.js');
   var CanvasElementHandle = app.CanvasElementHandle || require('./canvas-element-handle.js');
 
@@ -37,6 +38,39 @@
 
     data.splice(index, 1);
     data.push(canvasElement);
+  };
+
+  var CanvasElementRelation = helper.inherits(function(props) {
+    this.canvas = this.prop(props.canvas);
+    this.canvasElement = this.prop(props.canvasElement);
+  }, Relation);
+
+  CanvasElementRelation.prototype.update = function(changedComponent) {
+    var canvasElement = this.canvasElement();
+
+    if (changedComponent === canvasElement) {
+      // disable the canvas-element moving out of the canvas
+      var canvas = this.canvas();
+
+      var width = canvas.width();
+      var height = canvas.height();
+
+      var ex = canvasElement.x();
+      var ey = canvasElement.y();
+      var ewidth = canvasElement.width();
+      var eheight = canvasElement.height();
+
+      var offset = 20;
+
+      var x = Math.max(ex, offset - ewidth);
+      var y = Math.max(ey, offset - eheight);
+
+      x = Math.min(x, width - offset);
+      y = Math.min(y, height - offset);
+
+      canvasElement.x(x);
+      canvasElement.y(y);
+    }
   };
 
   var Canvas = helper.inherits(function(props) {
@@ -90,6 +124,14 @@
       parentElement: this.containerElement()
     }).then(function(canvasElement) {
       this.canvasElementList().add(canvasElement);
+
+      var relation = new CanvasElementRelation({
+        canvas: this,
+        canvasElement: canvasElement
+      });
+
+      canvasElement.relations().push(relation);
+
       this.updateZIndex();
       return canvasElement;
     }.bind(this));
