@@ -57,6 +57,14 @@
     dom.draggable(this.element(), onstart, onmove);
   }, Component);
 
+  Canvas.prototype.width = function() {
+    return 640;
+  };
+
+  Canvas.prototype.height = function() {
+    return 480;
+  };
+
   Canvas.prototype.borderWidth = function() {
     return 5;
   };
