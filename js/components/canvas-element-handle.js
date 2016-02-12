@@ -12,6 +12,7 @@
     this.y = this.prop(0);
     this.width = this.prop(0);
     this.height = this.prop(0);
+    this.visible = this.prop(false);
     this.element = this.prop(props.element);
   }, Component);
 
@@ -38,6 +39,7 @@
       height: this.height() + 'px',
       msTransform: translate,
       transform: translate,
+      visibility: this.visible() ? 'visible' : 'hidden',
       webkitTransform: translate,
       width: this.width() + 'px'
     });
