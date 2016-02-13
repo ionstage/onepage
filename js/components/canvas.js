@@ -140,6 +140,12 @@
 
       canvasElement.relations().push(relation);
 
+      var canvasElementHandle = this.canvasElementHandle();
+
+      // show the canvas-element-handle
+      canvasElementHandle.fitIn(canvasElement);
+      canvasElementHandle.visible(true);
+
       this.updateZIndex();
       return canvasElement;
     }.bind(this));
