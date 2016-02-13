@@ -89,6 +89,11 @@
     var onmove = Canvas.prototype.onmove.bind(this);
 
     dom.draggable(this.element(), onstart, onmove);
+
+    dom.on(document, dom.supportsTouch() ? 'touchstart' : 'mousedown', function() {
+      // hide the canvas-element-handle
+      this.canvasElementHandle().visible(false);
+    }.bind(this));
   }, Component);
 
   Canvas.prototype.width = function() {
@@ -152,6 +157,10 @@
 
     if (!canvasElement)
       return;
+
+    // show the canvas-element-handle
+    dom.stop(event);
+    this.canvasElementHandle().visible(true);
 
     context.x = canvasElement.x();
     context.y = canvasElement.y();

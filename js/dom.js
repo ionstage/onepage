@@ -125,6 +125,10 @@
     event.preventDefault();
   };
 
+  dom.stop = function(event) {
+    event.stopPropagation();
+  };
+
   dom.draggable = (function() {
     if (dom.unsupported())
       return function() {};
