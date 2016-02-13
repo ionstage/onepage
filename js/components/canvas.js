@@ -70,6 +70,9 @@
 
       canvasElement.x(x);
       canvasElement.y(y);
+
+      // move the canvas-element-handle onto the canvas-element
+      canvas.canvasElementHandle().fitIn(canvasElement);
     }
   };
 
@@ -158,9 +161,12 @@
     if (!canvasElement)
       return;
 
+    var canvasElementHandle = this.canvasElementHandle();
+
     // show the canvas-element-handle
     dom.stop(event);
-    this.canvasElementHandle().visible(true);
+    canvasElementHandle.fitIn(canvasElement);
+    canvasElementHandle.visible(true);
 
     context.x = canvasElement.x();
     context.y = canvasElement.y();

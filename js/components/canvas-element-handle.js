@@ -45,6 +45,13 @@
     });
   };
 
+  CanvasElementHandle.prototype.fitIn = function(canvasElement) {
+    this.x(canvasElement.x());
+    this.y(canvasElement.y());
+    this.width(canvasElement.width());
+    this.height(canvasElement.height());
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = CanvasElementHandle;
   else
