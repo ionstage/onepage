@@ -125,7 +125,7 @@
     });
   };
 
-  Canvas.prototype.loadElement = function(srcText, locator) {
+  Canvas.prototype.loadCanvasElement = function(srcText, locator) {
     return CanvasElement.load({
       srcText: srcText,
       locator: locator,
