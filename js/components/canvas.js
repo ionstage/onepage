@@ -153,6 +153,7 @@
 
   Canvas.prototype.onstart = function(x, y, event) {
     dom.cancel(event);
+    dom.removeFocus();
 
     var borderWidth = this.borderWidth();
 

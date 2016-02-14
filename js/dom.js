@@ -75,6 +75,10 @@
     return el.scrollTop;
   };
 
+  dom.removeFocus = function() {
+    document.activeElement.blur();
+  };
+
   dom.on = function(el, type, listener) {
     el.addEventListener(type, listener);
   };
