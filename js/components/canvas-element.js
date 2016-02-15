@@ -31,7 +31,6 @@
     var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
 
     dom.css(element, {
-      msTransform: translate,
       transform: translate,
       webkitTransform: translate,
       zIndex: this.zIndex()

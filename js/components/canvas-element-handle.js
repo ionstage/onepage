@@ -37,7 +37,6 @@
 
     dom.css(this.element(), {
       height: this.height() + 'px',
-      msTransform: translate,
       transform: translate,
       visibility: this.visible() ? 'visible' : 'hidden',
       webkitTransform: translate,
