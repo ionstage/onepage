@@ -81,6 +81,7 @@
 
     this.canvasElementList = this.prop(new CanvasElementList());
     this.element = this.prop(props.element);
+    this.selectedCanvasElement = this.prop(null);
 
     this.canvasElementHandle = this.prop(new CanvasElementHandle({
       element: this.handleElement()
@@ -94,8 +95,8 @@
     dom.draggable(this.element(), onstart, onmove);
 
     dom.on(document, dom.supportsTouch() ? 'touchstart' : 'mousedown', function() {
-      // hide the canvas-element-handle
-      this.canvasElementHandle().visible(false);
+      this.selectedCanvasElement(null);
+      this.updateCanvasElementHandle();
     }.bind(this));
   }, Component);
 
@@ -125,6 +126,20 @@
     });
   };
 
+  Canvas.prototype.updateCanvasElementHandle = function() {
+    var canvasElement = this.selectedCanvasElement();
+    var canvasElementHandle = this.canvasElementHandle();
+
+    if (canvasElement) {
+      // show the canvas-element-handle
+      canvasElementHandle.fitIn(canvasElement);
+      canvasElementHandle.visible(true);
+    } else {
+      // hide the canvas-element-handle
+      canvasElementHandle.visible(false);
+    }
+  };
+
   Canvas.prototype.loadCanvasElement = function(srcText, locator) {
     return CanvasElement.load({
       srcText: srcText,
@@ -140,11 +155,8 @@
 
       canvasElement.relations().push(relation);
 
-      var canvasElementHandle = this.canvasElementHandle();
-
-      // show the canvas-element-handle
-      canvasElementHandle.fitIn(canvasElement);
-      canvasElementHandle.visible(true);
+      this.selectedCanvasElement(canvasElement);
+      this.updateCanvasElementHandle();
 
       this.updateZIndex();
       return canvasElement;
@@ -170,10 +182,9 @@
 
     var canvasElementHandle = this.canvasElementHandle();
 
-    // show the canvas-element-handle
     dom.stop(event);
-    canvasElementHandle.fitIn(canvasElement);
-    canvasElementHandle.visible(true);
+    this.selectedCanvasElement(canvasElement);
+    this.updateCanvasElementHandle();
 
     context.x = canvasElement.x();
     context.y = canvasElement.y();
