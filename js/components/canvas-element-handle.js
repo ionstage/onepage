@@ -14,6 +14,16 @@
     this.height = this.prop(0);
     this.visible = this.prop(false);
     this.element = this.prop(props.element);
+
+    dom.on(this.element(), dom.supportsTouch() ? 'touchstart' : 'mousedown', function(event) {
+      var target = dom.target(event);
+
+      if (dom.parent(target) === this.element()) {
+        // make child component of the element manipulable
+        dom.stop(event);
+        dom.cancel(event);
+      }
+    }.bind(this));
   }, Component);
 
   CanvasElementHandle.prototype.deleteButtonElement = function() {

@@ -28,6 +28,10 @@
     return el.children[index];
   };
 
+  dom.parent = function(el) {
+    return el.parentNode;
+  };
+
   dom.css = function(el, props) {
     var style = el.style;
 
@@ -103,6 +107,13 @@
 
   dom.supportsTouch = function() {
     return 'createTouch' in document;
+  };
+
+  dom.target = function(event) {
+    if (dom.supportsTouch())
+      event = event.changedTouches[0];
+
+    return event.target;
   };
 
   dom.pagePoint = function(event, offset) {
