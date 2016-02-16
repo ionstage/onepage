@@ -37,6 +37,13 @@
     });
   };
 
+  CanvasElement.prototype.delete = function() {
+    // clear relations of the canvas-element
+    this.relations([]);
+
+    dom.remove(this.element());
+  };
+
   CanvasElement.load = function(props) {
     if (dom.isURL(props.srcText))
       return CanvasImageElement.load(props);

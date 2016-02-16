@@ -163,6 +163,20 @@
     }.bind(this));
   };
 
+  Canvas.prototype.deleteCanvasElement = function(canvasElement) {
+    if (!canvasElement)
+      return;
+
+    if (this.selectedCanvasElement() === canvasElement) {
+      this.selectedCanvasElement(null);
+      this.updateCanvasElementHandle();
+    }
+
+    canvasElement.delete();
+    this.canvasElementList().remove(canvasElement);
+    this.updateZIndex();
+  };
+
   Canvas.prototype.onstart = function(x, y, event) {
     dom.cancel(event);
     dom.removeFocus();
