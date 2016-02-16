@@ -13,6 +13,7 @@
     this.width = this.prop(props.width);
     this.height = this.prop(props.height);
     this.element = this.prop(props.element);
+    this.parentElement = this.prop(props.parentElement);
     this.zIndex = this.prop('auto');
   }, Component);
 
@@ -28,6 +29,15 @@
 
   CanvasElement.prototype.redraw = function() {
     var element = this.element();
+    var parentElement = this.parentElement();
+
+    // remove element
+    if (!parentElement && element) {
+      dom.remove(element);
+      this.element(null);
+      return;
+    }
+
     var translate = 'translate(' + this.x() + 'px, ' + this.y() + 'px)';
 
     dom.css(element, {
@@ -35,13 +45,6 @@
       webkitTransform: translate,
       zIndex: this.zIndex()
     });
-  };
-
-  CanvasElement.prototype.delete = function() {
-    // clear relations of the canvas-element
-    this.relations([]);
-
-    dom.remove(this.element());
   };
 
   CanvasElement.load = function(props) {
@@ -59,8 +62,6 @@
   }, CanvasElement);
 
   CanvasTextElement.prototype.redraw = function() {
-    CanvasTextElement.super_.prototype.redraw.call(this);
-
     var widthPerFontSize = this.widthPerFontSize();
     var heightPerFontSize = this.heightPerFontSize();
 
@@ -71,6 +72,8 @@
     this.height(fontSize * heightPerFontSize);
 
     dom.css(this.element(), { fontSize: fontSize + 'px' });
+
+    CanvasTextElement.super_.prototype.redraw.call(this);
   };
 
   CanvasTextElement.load = function(props) {
@@ -112,7 +115,8 @@
         height: height,
         widthPerFontSize: width / fontSize,
         heightPerFontSize: height / fontSize,
-        element: element
+        element: element,
+        parentElement: parentElement
       });
 
       instance.redraw();
@@ -129,8 +133,6 @@
   }, CanvasElement);
 
   CanvasImageElement.prototype.redraw = function() {
-    CanvasImageElement.super_.prototype.redraw.call(this);
-
     var width = this.width();
     var height = this.height();
     var aspectRatio = this.aspectRatio();
@@ -145,6 +147,8 @@
       width: width + 'px',
       height: height + 'px'
     });
+
+    CanvasImageElement.super_.prototype.redraw.call(this);
   };
 
   CanvasImageElement.load = function(props) {

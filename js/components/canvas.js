@@ -172,7 +172,12 @@
       this.updateCanvasElementHandle();
     }
 
-    canvasElement.delete();
+    // clear relations of the canvas-element
+    canvasElement.relations([]);
+
+    // remove DOM element of the canvas-element
+    canvasElement.parentElement(null);
+
     this.canvasElementList().remove(canvasElement);
     this.updateZIndex();
   };
