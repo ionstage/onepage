@@ -179,7 +179,8 @@
           width: width,
           height: height,
           aspectRatio: width / height,
-          element: element
+          element: element,
+          parentElement: parentElement
         });
 
         instance.redraw();
