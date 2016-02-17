@@ -15,6 +15,10 @@
     this.visible = this.prop(false);
     this.element = this.prop(props.element);
 
+    this.deleter = props.deleter;
+
+    this.ondelete = CanvasElementHandle.prototype.ondelete.bind(this);
+
     dom.on(this.element(), dom.supportsTouch() ? 'touchstart' : 'mousedown', function(event) {
       var target = dom.target(event);
 
@@ -59,6 +63,18 @@
     this.y(canvasElement.y());
     this.width(canvasElement.width());
     this.height(canvasElement.height());
+  };
+
+  CanvasElementHandle.prototype.enable = function() {
+    dom.on(this.deleteButtonElement(), 'click', this.ondelete);
+  };
+
+  CanvasElementHandle.prototype.disable = function() {
+    dom.off(this.deleteButtonElement(), 'click', this.ondelete);
+  };
+
+  CanvasElementHandle.prototype.ondelete = function() {
+    this.deleter();
   };
 
   if (typeof module !== 'undefined' && module.exports)

@@ -84,7 +84,8 @@
     this.selectedCanvasElement = this.prop(null);
 
     this.canvasElementHandle = this.prop(new CanvasElementHandle({
-      element: this.handleElement()
+      element: this.handleElement(),
+      deleter: Canvas.prototype.canvasElementDeleter.bind(this)
     }));
 
     this.dragContext = this.prop({});
@@ -134,9 +135,11 @@
       // show the canvas-element-handle
       canvasElementHandle.fitIn(canvasElement);
       canvasElementHandle.visible(true);
+      canvasElementHandle.enable();
     } else {
       // hide the canvas-element-handle
       canvasElementHandle.visible(false);
+      canvasElementHandle.disable();
     }
   };
 
@@ -180,6 +183,10 @@
 
     this.canvasElementList().remove(canvasElement);
     this.updateZIndex();
+  };
+
+  Canvas.prototype.canvasElementDeleter = function() {
+    this.deleteCanvasElement(this.selectedCanvasElement());
   };
 
   Canvas.prototype.onstart = function(x, y, event) {
