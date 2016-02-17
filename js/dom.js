@@ -116,6 +116,14 @@
     return event.target;
   };
 
+  dom.type = function(event) {
+    return event.type;
+  };
+
+  dom.which = function(event) {
+    return (event instanceof KeyboardEvent) ? event.which : null;
+  };
+
   dom.pagePoint = function(event, offset) {
     if (dom.supportsTouch())
       event = event.changedTouches[0];

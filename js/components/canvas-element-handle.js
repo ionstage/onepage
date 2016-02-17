@@ -67,14 +67,23 @@
 
   CanvasElementHandle.prototype.enable = function() {
     dom.on(this.deleteButtonElement(), 'click', this.ondelete);
+    dom.on(document, 'keydown', this.ondelete);
   };
 
   CanvasElementHandle.prototype.disable = function() {
     dom.off(this.deleteButtonElement(), 'click', this.ondelete);
+    dom.off(document, 'keydown', this.ondelete);
   };
 
-  CanvasElementHandle.prototype.ondelete = function() {
-    this.deleter();
+  CanvasElementHandle.prototype.ondelete = function(event) {
+    var type = dom.type(event);
+    var which = dom.which(event);
+
+    var isDeleteButtonClicked = (type === 'click');
+    var isDeleteKeyDown = (type === 'keydown' && (which === 8 || which === 46));
+
+    if (isDeleteButtonClicked || isDeleteKeyDown)
+      this.deleter();
   };
 
   if (typeof module !== 'undefined' && module.exports)
