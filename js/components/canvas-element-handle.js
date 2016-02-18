@@ -16,8 +16,12 @@
     this.element = this.prop(props.element);
 
     this.deleter = props.deleter;
+    this.forwardStepper = props.forwardStepper;
+    this.backwardStepper = props.backwardStepper;
 
     this.ondelete = CanvasElementHandle.prototype.ondelete.bind(this);
+    this.onstepforward = CanvasElementHandle.prototype.onstepforward.bind(this);
+    this.onstepbackward = CanvasElementHandle.prototype.onstepbackward.bind(this);
 
     dom.on(this.element(), dom.supportsTouch() ? 'touchstart' : 'mousedown', function(event) {
       var target = dom.target(event);
@@ -68,11 +72,15 @@
   CanvasElementHandle.prototype.enable = function() {
     dom.on(this.deleteButtonElement(), 'click', this.ondelete);
     dom.on(document, 'keydown', this.ondelete);
+    dom.on(this.stepForwardButtonElement(), 'click', this.onstepforward);
+    dom.on(this.stepBackwardButtonElement(), 'click', this.onstepbackward);
   };
 
   CanvasElementHandle.prototype.disable = function() {
     dom.off(this.deleteButtonElement(), 'click', this.ondelete);
     dom.off(document, 'keydown', this.ondelete);
+    dom.off(this.stepForwardButtonElement(), 'click', this.onstepforward);
+    dom.off(this.stepBackwardButtonElement(), 'click', this.onstepbackward);
   };
 
   CanvasElementHandle.prototype.ondelete = function(event) {
@@ -84,6 +92,14 @@
 
     if (isDeleteButtonClicked || isDeleteKeyDown)
       this.deleter();
+  };
+
+  CanvasElementHandle.prototype.onstepforward = function() {
+    this.forwardStepper();
+  };
+
+  CanvasElementHandle.prototype.onstepbackward = function() {
+    this.backwardStepper();
   };
 
   if (typeof module !== 'undefined' && module.exports)

@@ -41,6 +41,24 @@
     data[j] = tmp;
   };
 
+  CanvasElementList.prototype.shiftRight = function(canvasElement) {
+    var index = this.data.indexOf(canvasElement);
+
+    if (index === -1)
+      return;
+
+    this.swap(index, index + 1);
+  };
+
+  CanvasElementList.prototype.shiftLeft = function(canvasElement) {
+    var index = this.data.indexOf(canvasElement);
+
+    if (index === -1)
+      return;
+
+    this.swap(index, index - 1);
+  };
+
   var CanvasElementRelation = helper.inherits(function(props) {
     this.canvas = this.prop(props.canvas);
     this.canvasElement = this.prop(props.canvasElement);
@@ -87,7 +105,9 @@
 
     this.canvasElementHandle = this.prop(new CanvasElementHandle({
       element: this.handleElement(),
-      deleter: Canvas.prototype.canvasElementDeleter.bind(this)
+      deleter: Canvas.prototype.canvasElementDeleter.bind(this),
+      forwardStepper: Canvas.prototype.canvasElementForwardStepper.bind(this),
+      backwardStepper: Canvas.prototype.canvasElementBackwardStepper.bind(this)
     }));
 
     this.dragContext = this.prop({});
@@ -189,6 +209,16 @@
 
   Canvas.prototype.canvasElementDeleter = function() {
     this.deleteCanvasElement(this.selectedCanvasElement());
+  };
+
+  Canvas.prototype.canvasElementForwardStepper = function() {
+    this.canvasElementList().shiftRight(this.selectedCanvasElement());
+    this.updateZIndex();
+  };
+
+  Canvas.prototype.canvasElementBackwardStepper = function() {
+    this.canvasElementList().shiftLeft(this.selectedCanvasElement());
+    this.updateZIndex();
   };
 
   Canvas.prototype.onstart = function(x, y, event) {
