@@ -29,6 +29,18 @@
     return closeCanvasElement;
   };
 
+  CanvasElementList.prototype.swap = function(i, j) {
+    var data = this.data;
+    var len = data.length;
+
+    if (i < 0 || i >= len || j < 0 || j >= len)
+      return;
+
+    var tmp = data[i];
+    data[i] = data[j];
+    data[j] = tmp;
+  };
+
   var CanvasElementRelation = helper.inherits(function(props) {
     this.canvas = this.prop(props.canvas);
     this.canvasElement = this.prop(props.canvasElement);
