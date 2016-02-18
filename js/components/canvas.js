@@ -29,17 +29,6 @@
     return closeCanvasElement;
   };
 
-  CanvasElementList.prototype.toFront = function(canvasElement) {
-    var data = this.data;
-    var index = data.indexOf(canvasElement);
-
-    if (index === -1)
-      return;
-
-    data.splice(index, 1);
-    data.push(canvasElement);
-  };
-
   var CanvasElementRelation = helper.inherits(function(props) {
     this.canvas = this.prop(props.canvas);
     this.canvasElement = this.prop(props.canvasElement);
