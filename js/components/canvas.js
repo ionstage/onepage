@@ -59,6 +59,18 @@
     this.swap(index, index - 1);
   };
 
+  CanvasElementList.prototype.canShiftRight = function(canvasElement) {
+    var data = this.data;
+    var index = data.indexOf(canvasElement);
+
+    return (index !== -1 && index !== data.length - 1);
+  };
+
+  CanvasElementList.prototype.canShiftLeft = function(canvasElement) {
+    var index = this.data.indexOf(canvasElement);
+    return (index !== -1 && index !== 0);
+  };
+
   var CanvasElementRelation = helper.inherits(function(props) {
     this.canvas = this.prop(props.canvas);
     this.canvasElement = this.prop(props.canvasElement);
@@ -154,6 +166,11 @@
     var canvasElementHandle = this.canvasElementHandle();
 
     if (canvasElement) {
+      // update step-forward button and step-backward button
+      var canvasElementList = this.canvasElementList();
+      canvasElementHandle.stepForwardDisabled(!canvasElementList.canShiftRight(canvasElement));
+      canvasElementHandle.stepBackwardDisabled(!canvasElementList.canShiftLeft(canvasElement));
+
       // show the canvas-element-handle
       canvasElementHandle.fitIn(canvasElement);
       canvasElementHandle.visible(true);
@@ -213,11 +230,13 @@
 
   Canvas.prototype.canvasElementForwardStepper = function() {
     this.canvasElementList().shiftRight(this.selectedCanvasElement());
+    this.updateCanvasElementHandle();
     this.updateZIndex();
   };
 
   Canvas.prototype.canvasElementBackwardStepper = function() {
     this.canvasElementList().shiftLeft(this.selectedCanvasElement());
+    this.updateCanvasElementHandle();
     this.updateZIndex();
   };
 

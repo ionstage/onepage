@@ -69,6 +69,14 @@
     this.height(canvasElement.height());
   };
 
+  CanvasElementHandle.prototype.stepForwardDisabled = function(disabled) {
+    dom.disabled(this.stepForwardButtonElement(), disabled);
+  };
+
+  CanvasElementHandle.prototype.stepBackwardDisabled = function(disabled) {
+    dom.disabled(this.stepBackwardButtonElement(), disabled);
+  };
+
   CanvasElementHandle.prototype.enable = function() {
     dom.on(this.deleteButtonElement(), 'click', this.ondelete);
     dom.on(document, 'keydown', this.ondelete);
