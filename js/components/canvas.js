@@ -72,8 +72,9 @@
       canvasElement.x(x);
       canvasElement.y(y);
 
-      // move the canvas-element-handle onto the canvas-element
-      canvas.canvasElementHandle().fitIn(canvasElement);
+      // move the canvas-element-handle onto the selected canvas-element
+      if (canvas.selectedCanvasElement() === canvasElement)
+        canvas.canvasElementHandle().fitIn(canvasElement);
     }
   };
 
