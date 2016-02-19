@@ -174,11 +174,11 @@
       // show the canvas-element-handle
       canvasElementHandle.fitIn(canvasElement);
       canvasElementHandle.visible(true);
-      canvasElementHandle.enable();
+      canvasElementHandle.deleteKeyEnabled(true);
     } else {
       // hide the canvas-element-handle
       canvasElementHandle.visible(false);
-      canvasElementHandle.disable();
+      canvasElementHandle.deleteKeyEnabled(false);
     }
   };
 

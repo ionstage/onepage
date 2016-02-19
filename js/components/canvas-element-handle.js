@@ -34,6 +34,10 @@
         dom.cancel(event);
       }
     }.bind(this));
+
+    dom.on(this.deleteButtonElement(), 'click', this.ondelete);
+    dom.on(this.stepForwardButtonElement(), 'click', this.onstepforward);
+    dom.on(this.stepBackwardButtonElement(), 'click', this.onstepbackward);
   }, Component);
 
   CanvasElementHandle.prototype.deleteButtonElement = function() {
@@ -74,18 +78,11 @@
     this.height(canvasElement.height());
   };
 
-  CanvasElementHandle.prototype.enable = function() {
-    dom.on(this.deleteButtonElement(), 'click', this.ondelete);
-    dom.on(document, 'keydown', this.ondelete);
-    dom.on(this.stepForwardButtonElement(), 'click', this.onstepforward);
-    dom.on(this.stepBackwardButtonElement(), 'click', this.onstepbackward);
-  };
-
-  CanvasElementHandle.prototype.disable = function() {
-    dom.off(this.deleteButtonElement(), 'click', this.ondelete);
-    dom.off(document, 'keydown', this.ondelete);
-    dom.off(this.stepForwardButtonElement(), 'click', this.onstepforward);
-    dom.off(this.stepBackwardButtonElement(), 'click', this.onstepbackward);
+  CanvasElementHandle.prototype.deleteKeyEnabled = function(enabled) {
+    if (enabled)
+      dom.on(document, 'keydown', this.ondelete);
+    else
+      dom.off(document, 'keydown', this.ondelete);
   };
 
   CanvasElementHandle.prototype.ondelete = function(event) {
