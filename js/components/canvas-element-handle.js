@@ -31,9 +31,14 @@
       if (dom.parent(target) === this.element()) {
         // make child component of the element manipulable
         dom.stop(event);
-        dom.cancel(event);
+
+        if (!dom.supportsTouch())
+          dom.cancel(event);
       }
     }.bind(this));
+
+    if (dom.supportsTouch())
+      dom.on(this.element(), 'touchmove', dom.cancel);
 
     dom.on(this.deleteButtonElement(), 'click', this.ondelete);
     dom.on(this.stepForwardButtonElement(), 'click', this.onstepforward);
