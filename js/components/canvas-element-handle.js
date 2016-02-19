@@ -13,6 +13,8 @@
     this.width = this.prop(0);
     this.height = this.prop(0);
     this.visible = this.prop(false);
+    this.stepForwardDisabled = this.prop(false);
+    this.stepBackwardDisabled = this.prop(false);
     this.element = this.prop(props.element);
 
     this.deleter = props.deleter;
@@ -60,6 +62,9 @@
       webkitTransform: translate,
       width: this.width() + 'px'
     });
+
+    dom.disabled(this.stepForwardButtonElement(), this.stepForwardDisabled());
+    dom.disabled(this.stepBackwardButtonElement(), this.stepBackwardDisabled());
   };
 
   CanvasElementHandle.prototype.fitIn = function(canvasElement) {
@@ -67,14 +72,6 @@
     this.y(canvasElement.y());
     this.width(canvasElement.width());
     this.height(canvasElement.height());
-  };
-
-  CanvasElementHandle.prototype.stepForwardDisabled = function(disabled) {
-    dom.disabled(this.stepForwardButtonElement(), disabled);
-  };
-
-  CanvasElementHandle.prototype.stepBackwardDisabled = function(disabled) {
-    dom.disabled(this.stepBackwardButtonElement(), disabled);
   };
 
   CanvasElementHandle.prototype.enable = function() {
