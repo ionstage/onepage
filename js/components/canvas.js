@@ -241,7 +241,11 @@
   };
 
   Canvas.prototype.onstart = function(x, y, event) {
-    dom.cancel(event);
+    var supportsTouch = dom.supportsTouch();
+
+    if (!supportsTouch)
+      dom.cancel(event);
+
     dom.removeFocus();
 
     var borderWidth = this.borderWidth();
@@ -256,6 +260,9 @@
 
     if (!canvasElement)
       return;
+
+    if (supportsTouch)
+      dom.cancel(event);
 
     var canvasElementHandle = this.canvasElementHandle();
 
