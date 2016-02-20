@@ -119,7 +119,8 @@
       element: this.handleElement(),
       deleter: Canvas.prototype.canvasElementDeleter.bind(this),
       forwardStepper: Canvas.prototype.canvasElementForwardStepper.bind(this),
-      backwardStepper: Canvas.prototype.canvasElementBackwardStepper.bind(this)
+      backwardStepper: Canvas.prototype.canvasElementBackwardStepper.bind(this),
+      resizer: Canvas.prototype.resizer.bind(this)
     }));
 
     this.dragContext = this.prop({});
@@ -239,6 +240,33 @@
     this.updateCanvasElementHandle();
     this.updateZIndex();
   };
+
+  Canvas.prototype.resizer = (function() {
+    var context = {};
+
+    return function(dx, dy, isStart) {
+      var canvasElement;
+
+      if (isStart) {
+        canvasElement = this.selectedCanvasElement();
+        context.canvasElement = canvasElement;
+        context.width = canvasElement.width();
+        context.height = canvasElement.height();
+        return;
+      }
+
+      canvasElement = context.canvasElement;
+
+      var width = Math.max(context.width + dx, 12);
+      var height = Math.max(context.height + dy, 12);
+
+      canvasElement.width(width);
+      canvasElement.height(height);
+
+      // update the canvas-element first to fit in the canvas-element-handle
+      canvasElement.redraw();
+    };
+  })();
 
   Canvas.prototype.onstart = function(x, y, event) {
     var supportsTouch = dom.supportsTouch();
