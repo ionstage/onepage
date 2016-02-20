@@ -257,8 +257,9 @@
 
       canvasElement = context.canvasElement;
 
-      var width = Math.max(context.width + dx, 12);
-      var height = Math.max(context.height + dy, 12);
+      var aspectRatio = canvasElement.width() / canvasElement.height();
+      var width = Math.max(context.width + dx, 12 * aspectRatio, 12);
+      var height = Math.max(context.height + dy, 12 / aspectRatio, 12);
 
       canvasElement.width(width);
       canvasElement.height(height);
