@@ -262,9 +262,7 @@
 
       canvasElement.width(width);
       canvasElement.height(height);
-
-      // update the canvas-element first to fit in the canvas-element-handle
-      canvasElement.redraw();
+      canvasElement.adjustSizeTokeepAspectRatio();
     };
   })();
 

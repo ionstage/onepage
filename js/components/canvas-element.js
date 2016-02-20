@@ -59,9 +59,12 @@
 
     this.widthPerFontSize = this.prop(props.widthPerFontSize);
     this.heightPerFontSize = this.prop(props.heightPerFontSize);
+    this.cache = this.prop({});
   }, CanvasElement);
 
-  CanvasTextElement.prototype.redraw = function() {
+  CanvasTextElement.prototype.adjustSizeTokeepAspectRatio = function() {
+    var cache = this.cache();
+
     var widthPerFontSize = this.widthPerFontSize();
     var heightPerFontSize = this.heightPerFontSize();
 
@@ -71,9 +74,19 @@
     this.width(fontSize * widthPerFontSize);
     this.height(fontSize * heightPerFontSize);
 
-    dom.css(this.element(), { fontSize: fontSize + 'px' });
+    // keep the new font-size to redraw
+    cache.fontSize = fontSize;
+  };
+
+  CanvasTextElement.prototype.redraw = function() {
+    var cache = this.cache();
+
+    if ('fontSize' in cache)
+      dom.css(this.element(), { fontSize: cache.fontSize + 'px' });
 
     CanvasTextElement.super_.prototype.redraw.call(this);
+
+    delete cache.fontSize;
   };
 
   CanvasTextElement.load = function(props) {
@@ -132,7 +145,7 @@
     this.aspectRatio = this.prop(props.aspectRatio);
   }, CanvasElement);
 
-  CanvasImageElement.prototype.redraw = function() {
+  CanvasImageElement.prototype.adjustSizeTokeepAspectRatio = function() {
     var width = this.width();
     var height = this.height();
     var aspectRatio = this.aspectRatio();
@@ -142,10 +155,12 @@
 
     this.width(width);
     this.height(height);
+  };
 
+  CanvasImageElement.prototype.redraw = function() {
     dom.css(this.element(), {
-      width: width + 'px',
-      height: height + 'px'
+      width: this.width() + 'px',
+      height: this.height() + 'px'
     });
 
     CanvasImageElement.super_.prototype.redraw.call(this);
