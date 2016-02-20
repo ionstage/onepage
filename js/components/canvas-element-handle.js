@@ -101,6 +101,10 @@
     var isDeleteButtonClicked = (type === 'click');
     var isDeleteKeyDown = (type === 'keydown' && (which === 8 || which === 46));
 
+    // disable "back" function with the backspace key in the browser
+    if (isDeleteKeyDown)
+        dom.cancel(event);
+
     if (isDeleteButtonClicked || isDeleteKeyDown)
       this.deleter();
   };
