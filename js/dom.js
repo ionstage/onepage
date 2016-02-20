@@ -229,6 +229,22 @@
     };
   })();
 
+  dom.droppable = function(el, ondrop) {
+    dom.on(el, 'dragover', dom.cancel);
+
+    dom.on(el, 'drop', function(event) {
+      dom.cancel(event);
+
+      var rect = dom.rect(el);
+      var p = dom.clientPoint(event, {
+        x: rect.left - dom.scrollLeft(el),
+        y: rect.top - dom.scrollTop(el)
+      });
+
+      ondrop(p.x, p.y, event);
+    });
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = dom;
   else
