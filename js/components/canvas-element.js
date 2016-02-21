@@ -182,6 +182,21 @@
         var rect = dom.rect(element);
         var width = rect.width;
         var height = rect.height;
+        var aspectRatio = width / height;
+
+        var parentRect = dom.rect(parentElement);
+        var pwidth = parentRect.width;
+        var pheight = parentRect.height;
+
+        if (width > pwidth) {
+          width = pwidth;
+          height = pwidth / aspectRatio;
+        }
+
+        if (height > pheight) {
+          width = pheight * aspectRatio;
+          height = pheight;
+        }
 
         var point = locator({
           width: width,
@@ -193,7 +208,7 @@
           y: point.y,
           width: width,
           height: height,
-          aspectRatio: width / height,
+          aspectRatio: aspectRatio,
           element: element,
           parentElement: parentElement
         });
