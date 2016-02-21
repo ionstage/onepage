@@ -245,6 +245,29 @@
     });
   };
 
+  dom.getTextData = function(event) {
+    return event.dataTransfer.getData('text');
+  };
+
+  dom.getImageURLData = function(event) {
+    var dataTransfer = event.dataTransfer;
+    var types = dataTransfer.types;
+
+    if (!types)
+      return null;
+
+    var indexOf = Array.prototype.indexOf;
+
+    if (indexOf.call(types, 'text/uri-list') !== -1 && indexOf.call(types, 'text/html') !== -1) {
+      var text = dataTransfer.getData('text/html');
+      var m = text.match(/<img.*?src=(["\'])(.+?)\1.*?>/i);
+      if (m)
+        return m[2];
+    }
+
+    return null;
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = dom;
   else

@@ -134,6 +134,12 @@
       this.selectedCanvasElement(null);
       this.updateCanvasElementHandle();
     }.bind(this));
+
+    this.inserter = props.inserter;
+
+    var ondrop = Canvas.prototype.ondrop.bind(this);
+
+    dom.droppable(this.element(), ondrop);
   }, Component);
 
   Canvas.prototype.width = function() {
@@ -310,6 +316,15 @@
 
     canvasElement.x(context.x + dx);
     canvasElement.y(context.y + dy);
+  };
+
+  Canvas.prototype.ondrop = function(x, y, event) {
+    var borderWidth = this.borderWidth();
+
+    x -= borderWidth;
+    y -= borderWidth;
+
+    this.inserter(dom.getImageURLData(event) || dom.getTextData(event), x, y);
   };
 
   if (typeof module !== 'undefined' && module.exports)
