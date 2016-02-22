@@ -112,6 +112,7 @@
     Canvas.super_.call(this);
 
     this.canvasElementList = this.prop(new CanvasElementList());
+    this.disabled = this.prop(false);
     this.element = this.prop(props.element);
     this.selectedCanvasElement = this.prop(null);
 
@@ -160,6 +161,13 @@
 
   Canvas.prototype.handleElement = function() {
     return dom.child(this.element(), 1);
+  };
+
+  Canvas.prototype.redraw = function() {
+    if (this.disabled())
+      dom.addClass(this.element(), 'disabled');
+    else
+      dom.removeClass(this.element(), 'disabled');
   };
 
   Canvas.prototype.updateZIndex = function() {

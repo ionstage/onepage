@@ -44,6 +44,10 @@
     el.classList.add(className);
   };
 
+  dom.removeClass = function(el, className) {
+    el.classList.remove(className);
+  };
+
   dom.html = function(el, s) {
     el.innerHTML = s;
   };
