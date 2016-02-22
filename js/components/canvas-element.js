@@ -8,6 +8,7 @@
   var CanvasElement = helper.inherits(function(props) {
     CanvasElement.super_.call(this);
 
+    this.srcText = this.prop(props.srcText);
     this.x = this.prop(props.x);
     this.y = this.prop(props.y);
     this.width = this.prop(props.width);
@@ -122,6 +123,7 @@
       });
 
       var instance = new CanvasTextElement({
+        srcText: srcText,
         x: point.x,
         y: point.y,
         width: width,
@@ -204,6 +206,7 @@
         });
 
         var instance = new CanvasImageElement({
+          srcText: srcText,
           x: point.x,
           y: point.y,
           width: width,
