@@ -197,10 +197,11 @@
     }
   };
 
-  Canvas.prototype.loadCanvasElement = function(srcText, locator) {
+  Canvas.prototype.loadCanvasElement = function(srcText, locator, sizer) {
     return CanvasElement.load({
       srcText: srcText,
       locator: locator,
+      sizer: sizer,
       parentElement: this.containerElement()
     }).then(function(canvasElement) {
       this.canvasElementList().add(canvasElement);

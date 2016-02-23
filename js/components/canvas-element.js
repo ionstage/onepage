@@ -93,6 +93,7 @@
   CanvasTextElement.load = function(props) {
     var srcText = props.srcText;
     var locator = props.locator;
+    var sizer = props.sizer;
     var parentElement = props.parentElement;
 
     return Promise.resolve().then(function() {
@@ -134,6 +135,17 @@
         parentElement: parentElement
       });
 
+      var size = sizer({
+        width: width,
+        height: height
+      });
+
+      if (size.width !== width || size.height !== height) {
+        instance.width(size.width);
+        instance.height(size.height);
+        instance.adjustSizeTokeepAspectRatio();
+      }
+
       instance.redraw();
       dom.visible(element, true);
 
@@ -171,6 +183,7 @@
   CanvasImageElement.load = function(props) {
     var srcText = props.srcText;
     var locator = props.locator;
+    var sizer = props.sizer;
     var parentElement = props.parentElement;
 
     return new Promise(function(resolve, reject) {
@@ -215,6 +228,17 @@
           element: element,
           parentElement: parentElement
         });
+
+        var size = sizer({
+          width: width,
+          height: height
+        });
+
+        if (size.width !== width || size.height !== height) {
+          instance.width(size.width);
+          instance.height(size.height);
+          instance.adjustSizeTokeepAspectRatio();
+        }
 
         instance.redraw();
         dom.visible(element, true);
