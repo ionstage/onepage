@@ -278,7 +278,7 @@
 
       canvasElement.width(width);
       canvasElement.height(height);
-      canvasElement.adjustSizeTokeepAspectRatio();
+      canvasElement.adjustSizeToKeepAspectRatio();
     };
   })();
 

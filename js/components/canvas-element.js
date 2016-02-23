@@ -63,7 +63,7 @@
     this.cache = this.prop({});
   }, CanvasElement);
 
-  CanvasTextElement.prototype.adjustSizeTokeepAspectRatio = function() {
+  CanvasTextElement.prototype.adjustSizeToKeepAspectRatio = function() {
     var cache = this.cache();
 
     var widthPerFontSize = this.widthPerFontSize();
@@ -143,7 +143,7 @@
       if (size.width !== width || size.height !== height) {
         instance.width(size.width);
         instance.height(size.height);
-        instance.adjustSizeTokeepAspectRatio();
+        instance.adjustSizeToKeepAspectRatio();
       }
 
       instance.redraw();
@@ -159,7 +159,7 @@
     this.aspectRatio = this.prop(props.aspectRatio);
   }, CanvasElement);
 
-  CanvasImageElement.prototype.adjustSizeTokeepAspectRatio = function() {
+  CanvasImageElement.prototype.adjustSizeToKeepAspectRatio = function() {
     var width = this.width();
     var height = this.height();
     var aspectRatio = this.aspectRatio();
@@ -237,7 +237,7 @@
         if (size.width !== width || size.height !== height) {
           instance.width(size.width);
           instance.height(size.height);
-          instance.adjustSizeTokeepAspectRatio();
+          instance.adjustSizeToKeepAspectRatio();
         }
 
         instance.redraw();
