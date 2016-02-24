@@ -221,7 +221,7 @@
     }.bind(this));
   };
 
-  Canvas.prototype.loadCanvasElements = function(propsList) {
+  Canvas.prototype.loadCanvasElementAll = function(propsList) {
     return Promise.all(propsList.map(function(props) {
       var srcText = props.srcText;
 
