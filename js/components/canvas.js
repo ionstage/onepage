@@ -221,6 +221,43 @@
     }.bind(this));
   };
 
+  Canvas.prototype.loadCanvasElements = function(propsList) {
+    return Promise.all(propsList.map(function(props) {
+      var srcText = props.srcText;
+
+      var point = {
+        x: props.x,
+        y: props.y
+      };
+
+      var size = {
+        width: props.width,
+        height: props.height
+      };
+
+      return CanvasElement.load({
+        srcText: srcText,
+        locator: function() { return point; },
+        sizer: function() { return size; },
+        parentElement: this.containerElement()
+      });
+    }.bind(this))).then(function(canvasElements) {
+      canvasElements.forEach(function(canvasElement) {
+        this.canvasElementList().add(canvasElement);
+
+        var relation = new CanvasElementRelation({
+          canvas: this,
+          canvasElement: canvasElement
+        });
+
+        canvasElement.relations().push(relation);
+      }.bind(this));
+
+      this.updateZIndex();
+      return canvasElements;
+    }.bind(this));
+  };
+
   Canvas.prototype.deleteCanvasElement = function(canvasElement) {
     if (!canvasElement)
       return;
