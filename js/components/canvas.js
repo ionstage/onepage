@@ -258,6 +258,18 @@
     }.bind(this));
   };
 
+  Canvas.prototype.getCanvasElementPropsList = function() {
+    return this.canvasElementList().toArray().map(function(canvasElement) {
+      return {
+        srcText: canvasElement.srcText(),
+        x: canvasElement.x(),
+        y: canvasElement.y(),
+        width: canvasElement.width(),
+        height: canvasElement.height()
+      };
+    });
+  };
+
   Canvas.prototype.deleteCanvasElement = function(canvasElement) {
     if (!canvasElement)
       return;
