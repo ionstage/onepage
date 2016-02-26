@@ -128,8 +128,9 @@
 
     var onstart = Canvas.prototype.onstart.bind(this);
     var onmove = Canvas.prototype.onmove.bind(this);
+    var onend = Canvas.prototype.onend.bind(this);
 
-    dom.draggable(this.element(), onstart, onmove);
+    dom.draggable(this.element(), onstart, onmove, onend);
 
     dom.on(document, dom.supportsTouch() ? 'touchstart' : 'mousedown', function() {
       this.selectedCanvasElement(null);
@@ -141,6 +142,8 @@
     var ondrop = Canvas.prototype.ondrop.bind(this);
 
     dom.droppable(this.element(), ondrop);
+
+    this.updater = props.updater;
   }, Component);
 
   Canvas.prototype.width = function() {
@@ -297,18 +300,20 @@
     this.canvasElementList().shiftRight(this.selectedCanvasElement());
     this.updateCanvasElementHandle();
     this.updateZIndex();
+    this.updater();
   };
 
   Canvas.prototype.canvasElementBackwardStepper = function() {
     this.canvasElementList().shiftLeft(this.selectedCanvasElement());
     this.updateCanvasElementHandle();
     this.updateZIndex();
+    this.updater();
   };
 
   Canvas.prototype.resizer = (function() {
     var context = {};
 
-    return function(dx, dy, isStart) {
+    return function(dx, dy, isStart, isEnd) {
       var canvasElement;
 
       if (isStart) {
@@ -328,6 +333,9 @@
       canvasElement.width(width);
       canvasElement.height(height);
       canvasElement.adjustSizeToKeepAspectRatio();
+
+      if (isEnd && (dx !== 0 || dy !== 0))
+        this.updater();
     };
   })();
 
@@ -374,6 +382,11 @@
 
     canvasElement.x(context.x + dx);
     canvasElement.y(context.y + dy);
+  };
+
+  Canvas.prototype.onend = function(dx, dy) {
+    if (dx !== 0 || dy !== 0)
+      this.updater();
   };
 
   Canvas.prototype.ondrop = function(x, y, event) {

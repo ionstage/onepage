@@ -27,6 +27,7 @@
     this.onstepbackward = CanvasElementHandle.prototype.onstepbackward.bind(this);
     this.onresizestart = CanvasElementHandle.prototype.onresizestart.bind(this);
     this.onresizemove = CanvasElementHandle.prototype.onresizemove.bind(this);
+    this.onresizeend = CanvasElementHandle.prototype.onresizeend.bind(this);
 
     dom.on(this.element(), dom.supportsTouch() ? 'touchstart' : 'mousedown', function(event) {
       var target = dom.target(event);
@@ -46,7 +47,7 @@
     dom.on(this.deleteButtonElement(), 'click', this.ondelete);
     dom.on(this.stepForwardButtonElement(), 'click', this.onstepforward);
     dom.on(this.stepBackwardButtonElement(), 'click', this.onstepbackward);
-    dom.draggable(this.resizeHandleElement(), this.onresizestart, this.onresizemove);
+    dom.draggable(this.resizeHandleElement(), this.onresizestart, this.onresizemove, this.onresizeend);
   }, Component);
 
   CanvasElementHandle.prototype.deleteButtonElement = function() {
@@ -118,11 +119,15 @@
   };
 
   CanvasElementHandle.prototype.onresizestart = function() {
-    this.resizer(0, 0, true);
+    this.resizer(0, 0, true, false);
   };
 
   CanvasElementHandle.prototype.onresizemove = function(dx, dy) {
-    this.resizer(dx, dy, false);
+    this.resizer(dx, dy, false, false);
+  };
+
+  CanvasElementHandle.prototype.onresizeend = function(dx, dy) {
+    this.resizer(dx, dy, false, true);
   };
 
   if (typeof module !== 'undefined' && module.exports)
