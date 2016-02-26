@@ -144,6 +144,7 @@
     dom.droppable(this.element(), ondrop);
 
     this.updater = props.updater;
+    this.deleter = props.deleter;
   }, Component);
 
   Canvas.prototype.width = function() {
@@ -294,6 +295,7 @@
 
   Canvas.prototype.canvasElementDeleter = function() {
     this.deleteCanvasElement(this.selectedCanvasElement());
+    this.deleter();
   };
 
   Canvas.prototype.canvasElementForwardStepper = function() {
