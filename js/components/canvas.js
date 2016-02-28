@@ -387,6 +387,11 @@
   };
 
   Canvas.prototype.onend = function(dx, dy) {
+    var canvasElement = this.dragContext().canvasElement;
+
+    if (!canvasElement)
+      return;
+
     if (dx !== 0 || dy !== 0)
       this.updater();
   };
