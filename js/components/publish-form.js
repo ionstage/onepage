@@ -9,6 +9,11 @@
     PublishForm.super_.call(this);
 
     this.element = this.prop(props.element);
+
+    dom.on(this.textElement(), 'input', PublishForm.prototype.oninput.bind(this));
+
+    // redraw for the initial value of the text element
+    this.markDirty();
   }, Component);
 
   PublishForm.prototype.textElement = function() {
@@ -17,6 +22,15 @@
 
   PublishForm.prototype.buttonElement = function() {
     return dom.child(this.element(), 1);
+  };
+
+  PublishForm.prototype.redraw = function() {
+    var text = dom.value(this.textElement());
+    dom.disabled(this.buttonElement(), !text);
+  };
+
+  PublishForm.prototype.oninput = function() {
+    this.markDirty();
   };
 
   if (typeof module !== 'undefined' && module.exports)
