@@ -273,11 +273,25 @@
   };
 
   dom.btoa = function(s) {
-    return window.btoa(escape(encodeURIComponent(s)));
+    return window.btoa(escape(encodeURIComponent(s))).replace(/[+\/]/g, function(s) {
+      switch (s) {
+      case '+':
+        return '-';
+      case '/':
+        return '_';
+      }
+    });
   };
 
   dom.atob = function(s) {
-    return decodeURIComponent(unescape(window.atob(s)));
+    return decodeURIComponent(unescape(window.atob(s.replace(/[-_]/g, function(s) {
+      switch (s) {
+      case '-':
+        return '+';
+      case '_':
+        return '/';
+      }
+    }))));
   };
 
   if (typeof module !== 'undefined' && module.exports)
