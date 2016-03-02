@@ -272,6 +272,14 @@
     return null;
   };
 
+  dom.btoa = function(s) {
+    return window.btoa(escape(encodeURIComponent(s)));
+  };
+
+  dom.atob = function(s) {
+    return decodeURIComponent(unescape(window.atob(s)));
+  };
+
   if (typeof module !== 'undefined' && module.exports)
     module.exports = dom;
   else
