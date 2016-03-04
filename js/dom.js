@@ -109,6 +109,13 @@
     return true;
   };
 
+  dom.urlFragment = function(s) {
+    if (typeof s === 'undefined')
+      return location.hash.substring(1);
+
+    location.hash = '#' + s;
+  };
+
   dom.supportsTouch = function() {
     return 'createTouch' in document;
   };
