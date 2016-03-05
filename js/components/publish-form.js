@@ -9,8 +9,10 @@
     PublishForm.super_.call(this);
 
     this.element = this.prop(props.element);
+    this.publisher = props.publisher;
 
     dom.on(this.textElement(), 'input', PublishForm.prototype.oninput.bind(this));
+    dom.on(this.buttonElement(), 'click', PublishForm.prototype.onclick.bind(this));
 
     // redraw for the initial value of the text element
     this.markDirty();
@@ -31,6 +33,11 @@
 
   PublishForm.prototype.oninput = function() {
     this.markDirty();
+  };
+
+  PublishForm.prototype.onclick = function() {
+    var text = dom.value(this.textElement());
+    this.publisher(text);
   };
 
   if (typeof module !== 'undefined' && module.exports)
