@@ -113,7 +113,7 @@
     if (typeof s === 'undefined')
       return location.hash.substring(1);
 
-    location.hash = '#' + s;
+    location.replace('#' + s);
   };
 
   dom.supportsTouch = function() {
