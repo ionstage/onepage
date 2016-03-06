@@ -77,8 +77,15 @@
       width: this.width() + 'px'
     });
 
-    dom.disabled(this.stepForwardButtonElement(), this.stepForwardDisabled());
-    dom.disabled(this.stepBackwardButtonElement(), this.stepBackwardDisabled());
+    if (this.stepForwardDisabled())
+      dom.addClass(this.stepForwardButtonElement(), 'disabled');
+    else
+      dom.removeClass(this.stepForwardButtonElement(), 'disabled');
+
+    if (this.stepBackwardDisabled())
+      dom.addClass(this.stepBackwardButtonElement(), 'disabled');
+    else
+      dom.removeClass(this.stepBackwardButtonElement(), 'disabled');
   };
 
   CanvasElementHandle.prototype.fitIn = function(canvasElement) {
