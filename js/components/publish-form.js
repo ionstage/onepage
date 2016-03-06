@@ -9,6 +9,7 @@
     PublishForm.super_.call(this);
 
     this.element = this.prop(props.element);
+    this.updater = props.updater;
     this.publisher = props.publisher;
 
     dom.on(this.textElement(), 'input', PublishForm.prototype.oninput.bind(this));
@@ -40,6 +41,7 @@
 
   PublishForm.prototype.oninput = function() {
     this.markDirty();
+    this.updater();
   };
 
   PublishForm.prototype.onclick = function() {
