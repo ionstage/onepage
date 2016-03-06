@@ -26,6 +26,13 @@
     return dom.child(this.element(), 1);
   };
 
+  PublishForm.prototype.text = function(s) {
+    if (typeof s !== 'undefined')
+      this.markDirty();
+
+    return dom.value(this.textElement(), s);
+  };
+
   PublishForm.prototype.redraw = function() {
     var text = dom.value(this.textElement());
     dom.disabled(this.buttonElement(), !text);
@@ -36,8 +43,7 @@
   };
 
   PublishForm.prototype.onclick = function() {
-    var text = dom.value(this.textElement());
-    this.publisher(text);
+    this.publisher(this.text());
   };
 
   if (typeof module !== 'undefined' && module.exports)
