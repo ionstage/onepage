@@ -8,15 +8,13 @@
   var PublishForm = helper.inherits(function(props) {
     PublishForm.super_.call(this);
 
+    this.publishDisabled = this.prop(false);
     this.element = this.prop(props.element);
     this.updater = props.updater;
     this.publisher = props.publisher;
 
     dom.on(this.textElement(), 'input', PublishForm.prototype.oninput.bind(this));
     dom.on(this.buttonElement(), 'click', PublishForm.prototype.onclick.bind(this));
-
-    // redraw for the initial value of the text element
-    this.markDirty();
   }, Component);
 
   PublishForm.prototype.textElement = function() {
@@ -35,8 +33,7 @@
   };
 
   PublishForm.prototype.redraw = function() {
-    var text = dom.value(this.textElement());
-    dom.disabled(this.buttonElement(), !text);
+    dom.disabled(this.buttonElement(), this.publishDisabled());
   };
 
   PublishForm.prototype.oninput = function() {
