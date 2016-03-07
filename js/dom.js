@@ -121,10 +121,14 @@
   };
 
   dom.target = function(event) {
-    if (dom.supportsTouch())
+    if (dom.supportsTouch() && 'changedTouches' in event)
       event = event.changedTouches[0];
 
     return event.target;
+  };
+
+  dom.currentTarget = function(event) {
+    return event.currentTarget;
   };
 
   dom.type = function(event) {
