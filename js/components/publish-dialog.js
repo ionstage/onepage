@@ -24,16 +24,24 @@
   };
 
   PublishDialog.prototype.redraw = function() {
-    if (this.visible())
+    if (this.visible()) {
+      dom.addClass(dom.body(), 'unscrollable');
+      dom.on(dom.doc(), 'touchmove', dom.cancel);
       dom.removeClass(this.element(), 'hide');
-    else
+    } else {
+      dom.removeClass(dom.body(), 'unscrollable');
+      dom.off(dom.doc(), 'touchmove', dom.cancel);
       dom.addClass(this.element(), 'hide');
+    }
   };
 
   PublishDialog.prototype.onclose = function(event) {
     // accept event of the element that the event handler has been attached
     if (dom.target(event) !== dom.currentTarget(event))
       return;
+
+    if (dom.type(event) === 'touchstart')
+      dom.cancel(event);
 
     this.closer();
   };

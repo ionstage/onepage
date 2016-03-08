@@ -16,6 +16,14 @@
     return document.querySelector(selector);
   };
 
+  dom.doc = function() {
+    return document;
+  };
+
+  dom.body = function() {
+    return document.body;
+  };
+
   dom.append = function(parent, el) {
     parent.appendChild(el);
   };
