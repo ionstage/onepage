@@ -33,7 +33,17 @@
   };
 
   dom.child = function(el, index) {
-    return el.children[index];
+    var len = arguments.length;
+
+    if (len === 2)
+      return el.children[index];
+
+    for (var i = 1; i < len; i++) {
+      index = arguments[i];
+      el = el.children[index];
+    }
+
+    return el;
   };
 
   dom.parent = function(el) {

@@ -20,7 +20,7 @@
   }, Component);
 
   PublishDialog.prototype.closeButtonElement = function() {
-    return dom.child(dom.child(this.element(), 0), 1);
+    return dom.child(this.element(), 0, 1);
   };
 
   PublishDialog.prototype.redraw = function() {
