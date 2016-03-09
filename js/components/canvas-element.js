@@ -100,9 +100,9 @@
       var element = dom.el('<div>');
 
       srcText.split(/\r\n|\r|\n/g).forEach(function(text) {
-        text = helper.escape(text).replace(/\s/g, '&nbsp;');
+        text = helper.escape(text).replace(/\s/g, '&nbsp;') || '&nbsp;';
         var textElement = dom.el('<div>');
-        dom.html(textElement, text || '&nbsp;');
+        dom.html(textElement, text);
         dom.append(element, textElement);
       });
 
