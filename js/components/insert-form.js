@@ -46,15 +46,7 @@
 
   InsertForm.prototype.onclick = function() {
     var text = dom.value(this.textElement());
-
-    this.disabled(true);
-
-    this.inserter(text).then(function() {
-      dom.value(this.textElement(), '');
-      this.disabled(false);
-    }.bind(this)).catch(function() {
-      this.disabled(false);
-    }.bind(this));
+    this.inserter(text);
   };
 
   if (typeof module !== 'undefined' && module.exports)
