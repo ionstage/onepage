@@ -27,6 +27,10 @@
     return dom.child(this.element(), 1);
   };
 
+  InsertForm.prototype.clearText = function() {
+    dom.value(this.textElement(), '');
+  };
+
   InsertForm.prototype.redraw = function() {
     var disabled = this.disabled();
     var textElement = this.textElement();
