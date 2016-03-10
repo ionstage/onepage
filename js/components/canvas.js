@@ -132,7 +132,7 @@
 
     dom.draggable(this.element(), onstart, onmove, onend);
 
-    dom.on(document, dom.supportsTouch() ? 'touchstart' : 'mousedown', function() {
+    dom.on(document, dom.eventType('start'), function() {
       this.selectedCanvasElement(null);
       this.updateCanvasElementHandle();
     }.bind(this));

@@ -185,15 +185,20 @@
     event.stopPropagation();
   };
 
-  dom.draggable = (function() {
-    if (dom.unsupported())
-      return function() {};
-
+  dom.eventType = function(name) {
     var supportsTouch = dom.supportsTouch();
-    var EVENT_TYPE_START = supportsTouch ? 'touchstart' : 'mousedown';
-    var EVENT_TYPE_MOVE = supportsTouch ? 'touchmove' : 'mousemove';
-    var EVENT_TYPE_END = supportsTouch ? 'touchend' : 'mouseup';
 
+    switch (name) {
+    case 'start':
+      return (supportsTouch ? 'touchstart' : 'mousedown');
+    case 'move':
+      return (supportsTouch ? 'touchmove' : 'mousemove');
+    case 'end':
+      return (supportsTouch ? 'touchend' : 'mouseup');
+    }
+  };
+
+  dom.draggable = (function() {
     var Draggable = function(props) {
       this.el = props.el;
       this.onstart = props.onstart;
@@ -205,7 +210,7 @@
       this.lock = false;
       this.startingPoint = null;
 
-      dom.on(this.el, EVENT_TYPE_START, this.start);
+      dom.on(this.el, dom.eventType('start'), this.start);
     };
 
     var start = function(event) {
@@ -227,8 +232,8 @@
       if (typeof onstart === 'function')
         onstart(p.x, p.y, event);
 
-      dom.on(document, EVENT_TYPE_MOVE, this.move);
-      dom.on(document, EVENT_TYPE_END, this.end);
+      dom.on(document, dom.eventType('move'), this.move);
+      dom.on(document, dom.eventType('end'), this.end);
     };
 
     var move = function(event) {
@@ -240,8 +245,8 @@
     };
 
     var end = function(event) {
-      dom.off(document, EVENT_TYPE_MOVE, this.move);
-      dom.off(document, EVENT_TYPE_END, this.end);
+      dom.off(document, dom.eventType('move'), this.move);
+      dom.off(document, dom.eventType('end'), this.end);
 
       var onend = this.onend;
       var d = dom.pagePoint(event, this.startingPoint);

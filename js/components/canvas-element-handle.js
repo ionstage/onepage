@@ -29,7 +29,7 @@
     this.onresizemove = CanvasElementHandle.prototype.onresizemove.bind(this);
     this.onresizeend = CanvasElementHandle.prototype.onresizeend.bind(this);
 
-    dom.on(this.element(), dom.supportsTouch() ? 'touchstart' : 'mousedown', function(event) {
+    dom.on(this.element(), dom.eventType('start'), function(event) {
       var target = dom.target(event);
 
       if (dom.parent(target) === this.element()) {

@@ -15,7 +15,7 @@
 
     var onclose = PublishDialog.prototype.onclose.bind(this);
 
-    dom.on(this.element(), dom.supportsTouch() ? 'touchstart' : 'mousedown', onclose);
+    dom.on(this.element(), dom.eventType('start'), onclose);
     dom.on(this.closeButtonElement(), 'click', onclose);
   }, Component);
 
