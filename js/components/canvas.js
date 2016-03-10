@@ -103,7 +103,7 @@
       canvasElement.y(y);
 
       // move the canvas-element-handle onto the selected canvas-element
-      if (canvas.selectedCanvasElement() === canvasElement)
+      if (canvas.hasCanvasElementHandle() && canvas.selectedCanvasElement() === canvasElement)
         canvas.canvasElementHandle().fitIn(canvasElement);
     }
   };
@@ -113,16 +113,25 @@
 
     this.canvasElementList = this.prop(new CanvasElementList());
     this.disabled = this.prop(false);
+    this.hasCanvasElementHandle = this.prop(props.hasCanvasElementHandle);
     this.element = this.prop(props.element);
     this.selectedCanvasElement = this.prop(null);
 
-    this.canvasElementHandle = this.prop(new CanvasElementHandle({
-      element: this.handleElement(),
-      deleter: Canvas.prototype.canvasElementDeleter.bind(this),
-      forwardStepper: Canvas.prototype.canvasElementForwardStepper.bind(this),
-      backwardStepper: Canvas.prototype.canvasElementBackwardStepper.bind(this),
-      resizer: Canvas.prototype.resizer.bind(this)
-    }));
+    var canvasElementHandle;
+
+    if (this.hasCanvasElementHandle()) {
+      canvasElementHandle = new CanvasElementHandle({
+        element: this.handleElement(),
+        deleter: Canvas.prototype.canvasElementDeleter.bind(this),
+        forwardStepper: Canvas.prototype.canvasElementForwardStepper.bind(this),
+        backwardStepper: Canvas.prototype.canvasElementBackwardStepper.bind(this),
+        resizer: Canvas.prototype.resizer.bind(this)
+      });
+    } else {
+      canvasElementHandle = null;
+    }
+
+    this.canvasElementHandle = this.prop(canvasElementHandle);
 
     this.dragContext = this.prop({});
 
@@ -181,6 +190,9 @@
   };
 
   Canvas.prototype.updateCanvasElementHandle = function() {
+    if (!this.hasCanvasElementHandle())
+      return;
+
     var canvasElement = this.selectedCanvasElement();
     var canvasElementHandle = this.canvasElementHandle();
 
