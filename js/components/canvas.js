@@ -365,8 +365,6 @@
     if (supportsTouch)
       dom.cancel(event);
 
-    var canvasElementHandle = this.canvasElementHandle();
-
     dom.stop(event);
     this.selectedCanvasElement(canvasElement);
     this.updateCanvasElementHandle();
