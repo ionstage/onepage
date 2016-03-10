@@ -24,6 +24,10 @@
     return document.body;
   };
 
+  dom.title = function(s) {
+    document.title = s;
+  };
+
   dom.append = function(parent, el) {
     parent.appendChild(el);
   };
