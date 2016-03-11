@@ -26,6 +26,10 @@
     dom.on(this.closeButtonElement(), 'click', onclose);
   }, Component);
 
+  PublishDialog.prototype.contentElement = function() {
+    return dom.child(this.element(), 0, 0);
+  };
+
   PublishDialog.prototype.urlTextElement = function() {
     return dom.child(this.element(), 0, 0, 0, 0, 0);
   };
@@ -63,6 +67,9 @@
       dom.href(this.emailLinkElement(), 'mailto:?subject=' + encodedTitle + '&body=%0A%0A' + encodedURL);
       dom.href(this.twitterLinkElement(), 'https://twitter.com/share?text=' + encodedTitle + '&url=' + encodedURL);
       dom.href(this.facebookLinkElement(), 'https://www.facebook.com/sharer/sharer.php?u=' + encodedURL);
+
+      dom.resetScroll(this.contentElement());
+      dom.resetScroll(this.urlTextElement());
 
       dom.addClass(dom.body(), 'unscrollable');
       dom.on(dom.doc(), 'touchmove', dom.cancel);

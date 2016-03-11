@@ -109,6 +109,10 @@
     return el.scrollTop;
   };
 
+  dom.resetScroll = function(el) {
+    el.scrollTop = 0;
+  };
+
   dom.removeFocus = function() {
     document.activeElement.blur();
   };
