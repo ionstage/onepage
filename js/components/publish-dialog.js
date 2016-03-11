@@ -8,6 +8,8 @@
   var PublishDialog = helper.inherits(function(props) {
     PublishDialog.super_.call(this);
 
+    this.title = this.prop('');
+    this.url = this.prop('');
     this.visible = this.prop(false);
     this.element = this.prop(props.element);
 
@@ -50,6 +52,18 @@
 
   PublishDialog.prototype.redraw = function() {
     if (this.visible()) {
+      var title = this.title();
+      var url = this.url();
+
+      var encodedTitle = encodeURIComponent(title);
+      var encodedURL = encodeURIComponent(url);
+
+      dom.value(this.urlTextElement(), url);
+      dom.href(this.openLinkElement(), url);
+      dom.href(this.emailLinkElement(), 'mailto:?subject=' + encodedTitle + '&body=%0A%0A' + encodedURL);
+      dom.href(this.twitterLinkElement(), 'https://twitter.com/share?text=' + encodedTitle + '&url=' + encodedURL);
+      dom.href(this.facebookLinkElement(), 'https://www.facebook.com/sharer/sharer.php?u=' + encodedURL);
+
       dom.addClass(dom.body(), 'unscrollable');
       dom.on(dom.doc(), 'touchmove', dom.cancel);
       dom.removeClass(this.element(), 'hide');

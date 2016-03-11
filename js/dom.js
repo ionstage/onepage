@@ -81,6 +81,10 @@
     el.value = s;
   };
 
+  dom.href = function(el, s) {
+    el.setAttribute('href', s);
+  };
+
   dom.src = function(el, s) {
     el.src = s;
   };
@@ -133,6 +137,14 @@
     }
 
     return true;
+  };
+
+  dom.urlOrigin = function() {
+    return location.protocol + '//' + location.host;
+  };
+
+  dom.urlPathName = function() {
+    return location.pathname;
   };
 
   dom.urlFragment = function(s) {
