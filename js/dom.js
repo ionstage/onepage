@@ -121,6 +121,10 @@
     el.setSelectionRange(0, el.value.length);
   };
 
+  dom.clearSelection = function() {
+    window.getSelection().removeAllRanges();
+  };
+
   dom.on = function(el, type, listener) {
     el.addEventListener(type, listener);
   };

@@ -82,6 +82,9 @@
       dom.removeClass(dom.body(), 'unscrollable');
       dom.off(dom.doc(), 'touchmove', dom.cancel);
       dom.addClass(this.element(), 'hide');
+
+      if (dom.supportsTouch())
+        dom.clearSelection();
     }
   };
 
