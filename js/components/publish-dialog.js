@@ -19,6 +19,26 @@
     dom.on(this.closeButtonElement(), 'click', onclose);
   }, Component);
 
+  PublishDialog.prototype.urlTextElement = function() {
+    return dom.child(this.element(), 0, 0, 0, 0, 0);
+  };
+
+  PublishDialog.prototype.openLinkElement = function() {
+    return dom.child(this.element(), 0, 0, 1, 0, 0);
+  };
+
+  PublishDialog.prototype.emailLinkElement = function() {
+    return dom.child(this.element(), 0, 0, 1, 1, 0);
+  };
+
+  PublishDialog.prototype.twitterLinkElement = function() {
+    return dom.child(this.element(), 0, 0, 1, 2, 0);
+  };
+
+  PublishDialog.prototype.facebookLinkElement = function() {
+    return dom.child(this.element(), 0, 0, 1, 3, 0);
+  };
+
   PublishDialog.prototype.closeButtonElement = function() {
     return dom.child(this.element(), 0, 1);
   };
