@@ -109,6 +109,10 @@
     document.activeElement.blur();
   };
 
+  dom.selectAll = function(el) {
+    el.setSelectionRange(0, el.value.length);
+  };
+
   dom.on = function(el, type, listener) {
     el.addEventListener(type, listener);
   };

@@ -11,6 +11,11 @@
     this.visible = this.prop(false);
     this.element = this.prop(props.element);
 
+    // select all text in the url-text when clicked
+    dom.on(this.urlTextElement(), 'click', function(event) {
+      dom.selectAll(dom.currentTarget(event));
+    });
+
     this.closer = props.closer;
 
     var onclose = PublishDialog.prototype.onclose.bind(this);
@@ -48,6 +53,10 @@
       dom.addClass(dom.body(), 'unscrollable');
       dom.on(dom.doc(), 'touchmove', dom.cancel);
       dom.removeClass(this.element(), 'hide');
+
+      // don't select text without touch in mobile devices
+      if (!dom.supportsTouch())
+        dom.selectAll(this.urlTextElement());
     } else {
       dom.removeClass(dom.body(), 'unscrollable');
       dom.off(dom.doc(), 'touchmove', dom.cancel);
