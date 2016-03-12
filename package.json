@@ -3,13 +3,10 @@
   "version": "0.1.1",
   "scripts": {
     "build": "uglifyjs js/bundle.js -o build/bundle.min.js --comments '/^\\!|^@preserve|^@cc_on|\\bMIT\\b|\\bMPL\\b|\\bGPL\\b|\\(c\\)|License|Copyright/' -c -m; uglifyjs js/app.js -o build/app.min.js -c -m; cat css/app.css | cleancss -o build/app.min.css; cat css/viewer.css | cleancss -o build/viewer.min.css",
-    "bundle": "browserify -r circuit -r js-base64 -i buffer -o js/bundle.js",
+    "bundle": "browserify -o js/bundle.js",
     "start": "browser-sync start --files='index.html, css/*.css, js/*.js' --server"
   },
-  "dependencies": {
-    "circuit": "^0.1.4",
-    "js-base64": "^2.1.8"
-  },
+  "dependencies": {},
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "browserify": "^10.2.4",
