@@ -122,6 +122,7 @@
     if (this.hasCanvasElementHandle()) {
       canvasElementHandle = new CanvasElementHandle({
         element: this.handleElement(),
+        mover: Canvas.prototype.canvasElementMover.bind(this),
         deleter: Canvas.prototype.canvasElementDeleter.bind(this),
         forwardStepper: Canvas.prototype.canvasElementForwardStepper.bind(this),
         backwardStepper: Canvas.prototype.canvasElementBackwardStepper.bind(this),
@@ -205,11 +206,11 @@
       // show the canvas-element-handle
       canvasElementHandle.fitIn(canvasElement);
       canvasElementHandle.visible(true);
-      canvasElementHandle.deleteKeyEnabled(true);
+      canvasElementHandle.keyEnabled(true);
     } else {
       // hide the canvas-element-handle
       canvasElementHandle.visible(false);
-      canvasElementHandle.deleteKeyEnabled(false);
+      canvasElementHandle.keyEnabled(false);
     }
   };
 
@@ -303,6 +304,12 @@
 
     this.canvasElementList().remove(canvasElement);
     this.updateZIndex();
+  };
+
+  Canvas.prototype.canvasElementMover = function(dx, dy) {
+    var canvasElement = this.selectedCanvasElement();
+    canvasElement.x(canvasElement.x() + dx);
+    canvasElement.y(canvasElement.y() + dy);
   };
 
   Canvas.prototype.canvasElementDeleter = function() {

@@ -17,11 +17,13 @@
     this.stepBackwardDisabled = this.prop(false);
     this.element = this.prop(props.element);
 
+    this.mover = props.mover;
     this.deleter = props.deleter;
     this.forwardStepper = props.forwardStepper;
     this.backwardStepper = props.backwardStepper;
     this.resizer = props.resizer;
 
+    this.onmove = CanvasElementHandle.prototype.onmove.bind(this);
     this.ondelete = CanvasElementHandle.prototype.ondelete.bind(this);
     this.onstepforward = CanvasElementHandle.prototype.onstepforward.bind(this);
     this.onstepbackward = CanvasElementHandle.prototype.onstepbackward.bind(this);
@@ -95,11 +97,39 @@
     this.height(canvasElement.height());
   };
 
-  CanvasElementHandle.prototype.deleteKeyEnabled = function(enabled) {
-    if (enabled)
+  CanvasElementHandle.prototype.keyEnabled = function(enabled) {
+    if (enabled) {
+      dom.on(document, 'keydown', this.onmove);
       dom.on(document, 'keydown', this.ondelete);
-    else
+    } else {
+      dom.off(document, 'keydown', this.onmove);
       dom.off(document, 'keydown', this.ondelete);
+    }
+  };
+
+  CanvasElementHandle.prototype.onmove = function(event) {
+    var which = dom.which(event);
+    var key = CanvasElementHandle.keyMap[which];
+
+    if (!key)
+      return;
+
+    dom.cancel(event);
+
+    switch (key) {
+    case 'left':
+      this.mover(-1, 0);
+      break;
+    case 'up':
+      this.mover(0, -1);
+      break;
+    case 'right':
+      this.mover(1, 0);
+      break;
+    case 'down':
+      this.mover(0, 1);
+      break;
+    }
   };
 
   CanvasElementHandle.prototype.ondelete = function(event) {
@@ -140,6 +170,10 @@
 
   CanvasElementHandle.keyMap = {
     8: 'backspace',
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down',
     46: 'delete'
   };
 
