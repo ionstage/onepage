@@ -214,6 +214,26 @@
     }
   };
 
+  Canvas.prototype.stopKeyEventOnCanvasElementHandle = function() {
+    if (!this.hasCanvasElementHandle())
+      return;
+
+    var canvasElementHandle = this.canvasElementHandle();
+
+    if (canvasElementHandle.visible())
+      canvasElementHandle.keyEnabled(false);
+  };
+
+  Canvas.prototype.restartKeyEventOnCanvasElementHandle = function() {
+    if (!this.hasCanvasElementHandle())
+      return;
+
+    var canvasElementHandle = this.canvasElementHandle();
+
+    if (canvasElementHandle.visible())
+      canvasElementHandle.keyEnabled(true);
+  };
+
   Canvas.prototype.loadCanvasElement = function(srcText, locator, sizer) {
     return CanvasElement.load({
       srcText: srcText,
@@ -387,6 +407,7 @@
     dom.stop(event);
     this.selectedCanvasElement(canvasElement);
     this.updateCanvasElementHandle();
+    this.stopKeyEventOnCanvasElementHandle();
 
     context.x = canvasElement.x();
     context.y = canvasElement.y();
@@ -408,6 +429,8 @@
 
     if (!canvasElement)
       return;
+
+    this.restartKeyEventOnCanvasElementHandle();
 
     if (dx !== 0 || dy !== 0)
       this.updater();
