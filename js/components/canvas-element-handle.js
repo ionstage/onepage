@@ -105,9 +105,10 @@
   CanvasElementHandle.prototype.ondelete = function(event) {
     var type = dom.type(event);
     var which = dom.which(event);
+    var key = CanvasElementHandle.keyMap[which];
 
     var isDeleteButtonClicked = (type === 'click');
-    var isDeleteKeyDown = (type === 'keydown' && (which === 8 || which === 46));
+    var isDeleteKeyDown = (type === 'keydown' && (key === 'backspace' || key === 'delete'));
 
     // disable "back" function with the backspace key in the browser
     if (isDeleteKeyDown)
@@ -135,6 +136,11 @@
 
   CanvasElementHandle.prototype.onresizeend = function(dx, dy) {
     this.resizer(dx, dy, false, true);
+  };
+
+  CanvasElementHandle.keyMap = {
+    8: 'backspace',
+    46: 'delete'
   };
 
   if (typeof module !== 'undefined' && module.exports)
