@@ -362,6 +362,9 @@
         context.canvasElement = canvasElement;
         context.width = canvasElement.width();
         context.height = canvasElement.height();
+
+        this.stopKeyEventOnCanvasElementHandle();
+
         return;
       }
 
@@ -375,8 +378,12 @@
       canvasElement.height(height);
       canvasElement.adjustSizeToKeepAspectRatio();
 
-      if (isEnd && (dx !== 0 || dy !== 0))
-        this.updater();
+      if (isEnd) {
+        this.restartKeyEventOnCanvasElementHandle();
+
+        if (dx !== 0 || dy !== 0)
+          this.updater();
+      }
     };
   })();
 
