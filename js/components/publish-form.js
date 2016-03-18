@@ -8,7 +8,7 @@
   var PublishForm = helper.inherits(function(props) {
     PublishForm.super_.call(this);
 
-    this.publishDisabled = this.prop(false);
+    this.publishDisabled = this.prop(true);
     this.element = this.prop(props.element);
     this.updater = props.updater;
     this.publisher = props.publisher;
