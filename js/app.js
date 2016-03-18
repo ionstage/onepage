@@ -38,9 +38,14 @@
 
     this.urlComponent = new URLComponent();
 
-    this.loadURLFragment().then(function() {
-      this.saveURLFragment().then(this.updatePublishButton);
-    }.bind(this));
+    this.loadURLFragment().then(this.saveURLFragment).then(this.updatePublishButton);
+  };
+
+  App.prototype.data = function() {
+    return {
+      title: this.publishForm.text(),
+      list: this.canvas.getCanvasElementPropsList()
+    };
   };
 
   App.prototype.inserter = function(text, cx, cy) {
@@ -66,21 +71,21 @@
         this.insertForm.clearText();
       }
 
-      this.insertForm.disabled(false);
-      this.saveURLFragment().then(this.updatePublishButton);
+      return this.saveURLFragment(this.data()).then(this.updatePublishButton);
     }.bind(this)).catch(function(e) {
       console.error(e);
       alert('Load error!');
+    }.bind(this)).then(function() {
       this.insertForm.disabled(false);
     }.bind(this));
   };
 
   App.prototype.updater = function() {
-    this.saveURLFragment().then(this.updatePublishButton);
+    this.saveURLFragment(this.data()).then(this.updatePublishButton);
   };
 
   App.prototype.deleter = function() {
-    this.saveURLFragment().then(this.updatePublishButton);
+    this.saveURLFragment(this.data()).then(this.updatePublishButton);
   };
 
   App.prototype.publisher = function(text) {
@@ -114,20 +119,12 @@
     this.publishForm.text(data.title);
 
     return this.canvas.loadCanvasElementAll(data.list).then(function() {
-      return data;
-    });
+      return this.data();
+    }.bind(this));
   };
 
   App.prototype.saveURLFragment = function(data) {
-    var title = this.publishForm.text();
-    var list = this.canvas.getCanvasElementPropsList();
-    var isEmpty = (!title && list.length === 0);
-
-    var data = {
-      title: title,
-      list: list
-    };
-
+    var isEmpty = (!data.title && data.list.length === 0);
     var fragment = '!' + (!isEmpty ? dom.btoa(JSON.stringify(data)) : '');
 
     this.urlComponent.fragment(fragment);
