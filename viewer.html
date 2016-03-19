@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>OnePage</title>
-  <link rel="stylesheet" href="css/viewer.min.css" />
+  <link rel="stylesheet" href="css/viewer.min.css">
+  <link rel="icon" sizes="192x192" href="images/icon.png">
+  <link rel="apple-touch-icon-precomposed" href="images/icon.png">
 </head>
 <body>
-  <div id="canvas-container" class="unselectable">
-    <div id="canvas"></div>
+  <div class="canvas">
+    <div class="canvas-element-container"></div>
   </div>
   <script src="js/bundle.min.js"></script>
-  <script src="js/app.min.js"></script>
   <script>
-    onepage.viewer.initialize();
+    if (typeof Promise === 'undefined')
+      require('es6-promise').polyfill();
   </script>
+  <script src="js/viewer.min.js"></script>
 </body>
 </html>

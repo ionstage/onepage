@@ -1,66 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>OnePage</title>
-  <link rel="stylesheet" href="css/app.min.css" />
+  <meta name="description" content="Single page creator">
+  <link rel="stylesheet" href="css/app.min.css">
+  <link rel="icon" sizes="192x192" href="images/icon.png">
+  <link rel="apple-touch-icon-precomposed" href="images/icon.png">
 </head>
 <body>
-  <div id="main-page">
-    <div id="title">
-      <span id="title-label">OnePage</span>
-    </div>
-    <div id="textarea-container">
-      <textarea id="textarea" class="text" placeholder="Text or URL"></textarea>
-    </div>
-    <div id="insert-button-container">
-      <button id="insert-button" class="button unselectable">
+  <div class="header">OnePage</div>
+  <div class="content">
+    <div class="insert-form">
+      <textarea class="insert-text" placeholder="Text or Image URL" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+      <button class="insert-button" disabled>
         <img class="icon caret-down" src="images/caret-down.svg">
       </button>
     </div>
-    <div id="canvas-container" class="unselectable">
-      <div id="canvas-handle-container">
-        <div id="canvas-handle" class="hide">
-          <div id="canvas-handle-hitarea"></div>
-          <div id="canvas-handle-controller">
-            <img id="canvas-handle-delete-button" class="icon times-circle" src="images/times-circle.svg"><!--
-         --><button id="canvas-handle-up-button" class="button button-left canvas-handle-button unselectable">
-              <img class="icon chevron" src="images/chevron-up.svg">
-            </button><!--
-         --><button id="canvas-handle-down-button" class="button button-right canvas-handle-button unselectable">
-              <img class="icon chevron" src="images/chevron-down.svg">
-            </button>
-          </div>
-          <img id="canvas-handle-size-handle" class="icon circle" src="images/circle.svg">
+    <div class="canvas">
+      <div class="canvas-element-container"></div>
+      <div class="canvas-element-handle">
+        <img class="icon times-circle" src="images/times-circle.svg">
+        <button class="button up">
+          <img class="icon chevron" src="images/chevron-up.svg">
+        </button>
+        <button class="button down">
+          <img class="icon chevron" src="images/chevron-down.svg">
+        </button>
+        <img class="icon circle" src="images/circle.svg">
+      </div>
+    </div>
+    <div class="publish-form">
+      <input class="publish-title-text" type="text" placeholder="Title" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="publish-button" disabled>Publish</button>
+    </div>
+  </div>
+  <div class="dialog hide">
+    <div class="dialog-container">
+      <div class="dialog-content">
+        <p><label>URL<textarea class="url-text" readonly></textarea></label></p>
+        <div class="share-link">
+          <p><a href="#" target="_blank">Open in a new window</a></p>
+          <p><a href="#">Email</a></p>
+          <p><a href="#" target="_blank">Tweet</a></p>
+          <p><a href="#" target="_blank">Share on Facebook</a></p>
         </div>
       </div>
-      <div id="canvas"></div>
-    </div>
-    <div id="form-container">
-      <input id="publish-title-text" class="text" type="text" placeholder="Title" />
-      <button id="publish-button" class="button unselectable">Publish</button>
+      <button class="close-button">Close</button>
     </div>
   </div>
-  <div id="publish-page" class="hide">
-    <div id="publish-page-dialog">
-      <div id="publish-page-content">
-        <img id="publish-loading-spinner" class="icon spinner spin" src="images/spinner.svg">
-        <a id="publish-link" href="#" target="_blank" class="hide"></a>
-      </div>
-      <button id="publish-close-button" class="button unselectable">Close</button>
-    </div>
-  </div>
-  <!--[if (gte IE 9)|!(IE)]><!-->
   <script src="js/bundle.min.js"></script>
+  <script>
+    if (typeof Promise === 'undefined')
+      require('es6-promise').polyfill();
+  </script>
   <script src="js/app.min.js"></script>
-  <script>
-    onepage.app.initialize();
-  </script>
-  <!--<![endif]-->
-  <!--[if lt IE 9]>
-  <script>
-    alert('Sorry, your browser doesn\'t support this application.');
-  </script>
-  <![endif]-->
 </body>
 </html>
